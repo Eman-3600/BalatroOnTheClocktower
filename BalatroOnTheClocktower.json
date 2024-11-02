@@ -1,0 +1,17 @@
+{
+	"id": "ClockBosses",
+	"name": "ClockBosses",
+	"display_name": "Blinds: The Execution",
+	"author": ["Eman3600"],
+	"description": "Adds boss blinds based on the evil characters from Blood on the Clocktower.",
+	"prefix": "cbosses",
+	"main_file": "ClockBosses.lua",
+	"priority": 0,
+	"version": "0.1.0",
+	"dependencies": [
+		{
+			"id": "Steamodded",
+			"min_version": "1.0.0~ALPHA-1030e"
+		}
+	]
+}
