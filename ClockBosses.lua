@@ -18,6 +18,7 @@ local blind_list = {
     "knife",
     "cheat",
     "fear",
+    "blast",
 }
 
 local mod_path = SMODS.current_mod.path

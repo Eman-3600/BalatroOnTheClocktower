@@ -16,7 +16,7 @@ local blind = {
 
 blind.defeat = function (self)
 
-    if (not self.disabled) and (G.GAME.chips >= G.GAME.blind.chips * 2) then
+    if (not G.GAME.blind.disabled) and (G.GAME.chips >= G.GAME.blind.chips * 2) then
         for _, joker in ipairs(G.jokers.cards) do
             joker:set_eternal(true)
             if (joker.ability.eternal) then

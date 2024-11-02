@@ -33,7 +33,7 @@ blind.set_blind = function (self)
 end
 
 blind.drawn_to_hand = function (self)
-    if not self.disabled and self.prepped then
+    if not G.GAME.blind.disabled and self.prepped then
         self.prepped = false
         local successful
 

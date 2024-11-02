@@ -15,7 +15,7 @@ local blind = {
 }
 
 blind.set_blind = function (self)
-    if not self.disabled then
+    if not G.GAME.blind.disabled then
         for _, card in ipairs(G.playing_cards) do
             card.ability.truth = card.config.card
 
