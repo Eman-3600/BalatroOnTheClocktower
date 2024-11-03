@@ -21,6 +21,7 @@ local blind_list = {
     "blast",
     "seat",
     "word",
+    "veil",
 }
 
 local mod_path = SMODS.current_mod.path
