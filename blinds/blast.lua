@@ -16,17 +16,20 @@ local blind = {
 
 blind.set_blind = function (self)
     self.prepped = true
+    self.hand_size_change = 5
 
     G.hand:change_size(5)
 end
 
 blind.disable = function (self)
-    G.hand:change_size(-5)
+    G.hand:change_size(-self.hand_size_change)
+
+    self.hand_size_change = 0
 end
 
 blind.defeat = function (self)
     if not G.GAME.blind.disabled then
-        G.hand:change_size(-5)
+        G.hand:change_size(-self.hand_size_change)
     end
 end
 
