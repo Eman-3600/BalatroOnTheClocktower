@@ -19,7 +19,7 @@ blind.stay_flipped = function (self, area, card)
     if area ~= G.hand then return false end
 
     for _, v in ipairs(G.hand.cards) do
-        if v.ability.wheel_flipped and (v:is_suit(card.base.suit) or card:is_suit(card.base.suit)) then
+        if v.ability.wheel_flipped and (v:is_suit(card.base.suit) or card:is_suit(v.base.suit)) then
             return false
         end
     end

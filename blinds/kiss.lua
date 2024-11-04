@@ -15,6 +15,20 @@ local blind = {
     },
 }
 
+blind.set_blind = function (self)
+    self.hands_sub = 0
+
+    if G.GAME.round_resets.hands < 2 then
+        self.hands_sub = G.GAME.round_resets.hands - 2
+        ease_hands_played(-self.hands_sub)
+    end
+end
+
+blind.disable = function (self)
+    G.GAME.blind.chips = G.GAME.blind.chips * 2 / self.mult
+    G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
+end
+
 blind.eman_modify_chips = function (self, hand_chips, mult)
     local total = math.min(math.floor(hand_chips*mult), math.floor(G.GAME.blind.chips * .5))
 
@@ -28,7 +42,7 @@ end
 
 blind.collection_loc_vars = function (self)
 
-    self.vars = {"{0.75X Base}"}
+    self.vars = {"50% of"}
     return self.vars
 end
 
