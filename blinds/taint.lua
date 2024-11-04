@@ -9,7 +9,7 @@ local blind = {
         name ="The Taint",
         text={
             "1 card in hand",
-            " always debuffed",
+            "always debuffed",
         },
     },
 }

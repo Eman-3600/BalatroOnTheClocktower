@@ -8,7 +8,7 @@ local blind = {
     loc_txt = {
         name ="The Blast",
         text={
-            "Draw only one hand",
+            "Draw only 1 hand",
             "+5 Hand Size",
         },
     },

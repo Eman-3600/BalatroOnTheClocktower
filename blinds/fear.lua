@@ -8,7 +8,7 @@ local blind = {
     loc_txt = {
         name ="The Fear",
         text={
-            "Playing or discarding a High",
+            "Playing or Discarding a High",
             "Card makes a Joker perishable",
         },
     },

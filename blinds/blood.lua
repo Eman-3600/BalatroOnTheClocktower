@@ -9,7 +9,7 @@ local blind = {
         name ="The Blood",
         text={
             "Destroys a card after",
-            "play or discard",
+            "Play or Discard",
         },
     },
 }

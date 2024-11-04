@@ -8,8 +8,8 @@ local blind = {
     loc_txt = {
         name ="The Word",
         text={
-            "One card drawn face",
-            "down per suit in hand",
+            "1 card of each",
+            "suit drawn face down",
         },
     },
 }
@@ -19,7 +19,7 @@ blind.stay_flipped = function (self, area, card)
     if area ~= G.hand then return false end
 
     for _, v in ipairs(G.hand.cards) do
-        if v.base.suit == card.base.suit and v.ability.wheel_flipped then
+        if v.ability.wheel_flipped and (v:is_suit(card.base.suit) or card:is_suit(card.base.suit)) then
             return false
         end
     end

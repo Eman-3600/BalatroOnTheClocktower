@@ -68,7 +68,7 @@ end
 
 blind.loc_vars = function (self)
 
-    return { vars = {""..(G.GAME.current_round.most_played_poker_hand or "{most played poker hand}")}}
+    return { vars = {""..(G.GAME.current_round.most_played_poker_hand or "(most played hand)")}}
 end
 
 blind.collection_loc_vars = function (self)

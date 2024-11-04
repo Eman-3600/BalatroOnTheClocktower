@@ -9,7 +9,7 @@ local blind = {
         name ="The Veil",
         text={
             "All cards drawn face down;",
-            "flip after play or discard",
+            "flip after Play or Discard",
         },
     },
 }

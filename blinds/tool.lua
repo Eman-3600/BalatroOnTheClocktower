@@ -9,7 +9,7 @@ local blind = {
         name ="The Tool",
         text={
             "Creates a card after",
-            "play or discard",
+            "Play or Discard",
         },
     },
 }
