@@ -26,6 +26,7 @@ local blind_list = {
     "web",
     "omen",
     "talon",
+    "trick",
 
     "scarlet_thorn",
 }

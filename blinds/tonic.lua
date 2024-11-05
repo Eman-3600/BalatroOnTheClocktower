@@ -3,70 +3,39 @@ local blind = {
     key = "tonic",
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 6},
-    boss = {min = 3, max = 10},
+    boss = {min = 1, max = 10},
     boss_colour = HEX('565d6a'),
     loc_txt = {
         name ="The Tonic",
         text={
-            "Negative Jokers",
-            "are debuffed",
+            "Must play at",
+            "least 2 suits",
         },
     },
 }
 
-blind.in_pool = function (self)
+blind.debuff_hand = function (self, cards, hand, handname, check)
+    if #cards < 2 then return true end
 
-    if G.jokers and (self.boss.min <= math.max(1, G.GAME.round_resets.ante)) then
-    
-        for _, card in ipairs(G.jokers.cards) do
-            if card.edition and card.edition.negative then
-                return true
-            end
-        end
+    for _, card in ipairs(cards) do
+        card:create_suit_set()
     end
 
-    return false
-end
+    if #(cards[1].ability.suit_set) > 1 then return false end
 
-blind.set_blind = function (self)
-    self.prepped = true
-end
+    local lead_suit = cards[1].base.suit
 
-blind.drawn_to_hand = function (self)
-    if not G.GAME.blind.disabled and self.prepped then
-        self.prepped = false
-        local successful
+    for i = 2, #cards, 1 do
+        local card = cards[i]
 
-        for _, card in ipairs(G.jokers.cards) do
-            
-            if card.edition and card.edition.negative and not card.ability.debuff then
-                successful = true
-
-                card:set_debuff(true)
-                card:juice_up()
-            elseif card.ability.debuff then
-                successful = true
-
-                card:set_debuff(false)
-                card:juice_up()
-            end
-
-            if successful then
-                G.GAME.blind:wiggle()
-            end
-        end
+        if #(card.ability.suit_set) > 1 or not card:is_suit(lead_suit) then return false end
     end
+
+    return true
 end
 
-blind.press_play = function (self)
-    self.prepped = true
-end
-
-blind.defeat = function (self)
-    for _, card in ipairs(G.jokers.cards) do
-            
-        card:set_debuff(false)
-    end
+blind.get_loc_debuff_text = function (self)
+    return "Must play more than 1 suit"
 end
 
 
