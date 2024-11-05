@@ -23,6 +23,8 @@ local blind_list = {
     "word",
     "veil",
     "mirror",
+    "web",
+    "omen",
 
     "scarlet_thorn",
 }

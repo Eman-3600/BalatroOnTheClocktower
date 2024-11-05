@@ -33,7 +33,7 @@ end
 
 blind.collection_loc_vars = function (self)
 
-    self.vars = {"{4X Base}"}
+    self.vars = {"200% of"}
     return self.vars
 end
 
