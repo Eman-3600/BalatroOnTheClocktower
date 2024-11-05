@@ -6,6 +6,11 @@
         "pseudoseed",
         "G",
         "get_blind_amount",
-        "pseudorandom"
+        "pseudorandom",
+        "create_all_suit_sets",
+        "Card",
+        "SMODS",
+        "create_unique_suit_combo",
+        "sendDebugMessage"
     ]
 }

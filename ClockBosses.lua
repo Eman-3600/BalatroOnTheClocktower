@@ -25,6 +25,7 @@ local blind_list = {
     "mirror",
     "web",
     "omen",
+    "talon",
 
     "scarlet_thorn",
 }
@@ -284,6 +285,63 @@ function x_ranks_missing(cards, x)
     end
 
     return #ranks >= x
+end
+
+-- Stores within each card all the suits it is considered to be
+function create_all_suit_sets()
+    
+    for _, card in ipairs(G.playing_cards) do
+        card:create_suit_set()
+    end
+end
+
+-- Stores within the card all the suits it is considered to be
+function Card:create_suit_set()
+    local suit_set = {}
+
+    for k, v in pairs(SMODS.Suits) do
+        if self:is_suit(k) then
+            table.insert(suit_set, k)
+        end
+    end
+
+    self.ability.suit_set = suit_set
+end
+
+-- Creates and returns the different ways in which the given cards can be considered to be different suits
+-- If this is impossible, will return an empty table instead
+-- Used by the Word to flip cards of different suits
+function create_unique_suit_combo(initial, suit_set)
+    local superpositions = {}
+
+    if #initial == 0 then
+        for _, suit in ipairs(suit_set) do
+            local p = {}
+            p[suit] = true
+
+            table.insert(superpositions, p)
+        end
+
+        return superpositions
+    end
+
+    for _, suit in ipairs(suit_set) do
+        for _, position in ipairs(initial) do
+            if not position[suit] then
+                local p = {}
+
+                p[suit] = true
+
+                for k, v in pairs(position) do
+                    p[k] = true
+                end
+
+                table.insert(superpositions, p)
+            end
+        end
+    end
+
+    return superpositions
 end
     ----------------------------------------------
     ------------MOD CODE END----------------------

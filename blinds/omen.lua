@@ -3,7 +3,7 @@ local blind = {
     key = "omen",
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 21},
-    boss = {min = 4, max = 10},
+    boss = {min = 3, max = 10},
     boss_colour = HEX('472d56'),
     loc_txt = {
         name ="The Omen",

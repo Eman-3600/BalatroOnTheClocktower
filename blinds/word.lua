@@ -14,17 +14,33 @@ local blind = {
     },
 }
 
+blind.eman_modify_draw = function (self, hand_count)
+
+    create_all_suit_sets()
+    self.flipped_combos = {}
+
+    for _, card in ipairs(G.hand.cards) do
+        if card.ability.wheel_flipped then
+            self.flipped_combos = create_unique_suit_combo(self.flipped_combos, card.ability.suit_set)
+        end
+    end
+
+    return hand_count
+end
+
 blind.stay_flipped = function (self, area, card)
 
     if area ~= G.hand then return false end
 
-    for _, v in ipairs(G.hand.cards) do
-        if v.ability.wheel_flipped and (v:is_suit(card.base.suit) or card:is_suit(v.base.suit)) then
-            return false
-        end
+    local next_suit_combo = create_unique_suit_combo(self.flipped_combos, card.ability.suit_set)
+
+    if next_suit_combo[1] then
+        self.flipped_combos = next_suit_combo
+
+        return true
     end
 
-    return true
+    return false
 end
 
 
