@@ -14,6 +14,20 @@ local blind = {
     },
 }
 
+blind.in_pool = function (self)
+
+    if G.jokers and (self.boss.min <= math.max(1, G.GAME.round_resets.ante)) then
+    
+        for _, joker in ipairs(G.jokers.cards) do
+            if joker.config.center.eternal_compat and not joker.ability.eternal and not joker.ability.perishable then
+                return true
+            end
+        end
+    end
+
+    return false
+end
+
 blind.defeat = function (self)
 
     if (not G.GAME.blind.disabled) and (G.GAME.chips >= G.GAME.blind.chips * 2) then

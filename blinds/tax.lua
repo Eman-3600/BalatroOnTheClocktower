@@ -19,6 +19,9 @@ blind.set_blind = function (self)
     self.spent = nil
 end
 
+-- Called directly after drawing cards from the deck to hand if the boss is enabled
+-- I probably didn't need to make a custom function & inject but it works and
+-- hasn't 
 blind.eman_after_draw = function (self, count)
 
     G.E_MANAGER:add_event(Event({
@@ -30,7 +33,7 @@ blind.eman_after_draw = function (self, count)
 
             local most_played = G.GAME.current_round.most_played_poker_hand
 
-            -- TEMPORARY SOLUTION: Sometimes returns more cards than it should
+            -- TEMPORARY SOLUTION: Likes to discard the wrong cards/too many cards
             local found_hands = evaluate_poker_hand(G.hand.cards)
 
             if next(found_hands[most_played]) then
@@ -73,7 +76,7 @@ end
 
 blind.collection_loc_vars = function (self)
 
-    self.vars = {"{most played poker hand}"}
+    self.vars = {"(most played hand)"}
     return self.vars
 end
 
