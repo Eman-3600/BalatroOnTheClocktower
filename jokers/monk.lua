@@ -5,6 +5,8 @@ local joker = {
     rarity = 1,
     cost = 4,
     pos = {x = 1, y = 0},
+    eternal_compat = true,
+    perishable_compat = true,
     blueprint_compat = true,
     config = {mult_per = 8},
     loc_txt = {

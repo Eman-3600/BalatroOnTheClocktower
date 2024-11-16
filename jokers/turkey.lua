@@ -5,6 +5,9 @@ local joker = {
     rarity = 1,
     cost = 5,
     pos = {x = 2, y = 0},
+    eternal_compat = false,
+    perishable_compat = true,
+    blueprint_compat = false,
     config = {slots = 4, slot_mod = 1},
     loc_txt = {
         name ="Turkey",
