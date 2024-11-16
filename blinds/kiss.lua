@@ -37,7 +37,7 @@ end
 
 blind.loc_vars = function (self)
 
-    return { vars = {""..(get_blind_amount(G.GAME.round_resets.ante) * self.mult * G.GAME.starting_params.ante_scaling * .5)}}
+    return { vars = {number_format(get_blind_amount(G.GAME.round_resets.ante) * self.mult * G.GAME.starting_params.ante_scaling * .5)}}
 end
 
 blind.collection_loc_vars = function (self)

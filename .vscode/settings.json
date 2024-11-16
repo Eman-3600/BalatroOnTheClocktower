@@ -11,6 +11,27 @@
         "Card",
         "SMODS",
         "create_unique_suit_combo",
-        "sendDebugMessage"
+        "sendDebugMessage",
+        "NFS",
+        "sendErrorMessage",
+        "localize",
+        "play_sound",
+        "card_eval_status_text",
+        "Event",
+        "evaluate_poker_hand",
+        "delay",
+        "HEX",
+        "create_playing_card",
+        "playing_card_joker_effects",
+        "pseudoshuffle",
+        "ease_hands_played",
+        "ease_background_colour",
+        "darken",
+        "draw_card",
+        "number_format",
+        "end_round",
+        "get_highest",
+        "Blind",
+        "eman_draw_phantom_card"
     ]
 }

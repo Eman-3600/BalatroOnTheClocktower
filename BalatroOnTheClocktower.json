@@ -1,11 +1,11 @@
 {
-	"id": "ClockBosses",
-	"name": "ClockBosses",
-	"display_name": "Balatro on the Clocktower",
+	"id": "BaOTC",
+	"name": "Balatro on the Clocktower",
+	"display_name": "BaOTC",
 	"author": ["Eman3600"],
 	"description": "Adds boss blinds based on the evil characters from Blood on the Clocktower.",
-	"prefix": "cbosses",
-	"main_file": "ClockBosses.lua",
+	"prefix": "baotc",
+	"main_file": "BaOTC.lua",
 	"priority": 0,
 	"version": "0.1.0",
 	"dependencies": [

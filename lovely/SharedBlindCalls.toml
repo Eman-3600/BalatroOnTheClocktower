@@ -180,7 +180,7 @@ target = "cardarea.lua"
 pattern = "if area == G.discard then"
 position = "before"
 payload = '''
-if self == G.deck and card.edition and card.edition.cbosses_phantom then
+if self == G.deck and card.edition and card.edition.baotc_phantom then
     card:start_dissolve()
     return false
 end
@@ -196,7 +196,7 @@ target = "common_events.lua"
 pattern = "to:emplace(card, nil, stay_flipped)"
 position = "before"
 payload = '''
-if to == G.deck and card and card.edition and card.edition.cbosses_phantom then
+if to == G.deck and card and card.edition and card.edition.baotc_phantom then
     card:start_dissolve()
     return true
 end

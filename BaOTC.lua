@@ -31,6 +31,13 @@ local blind_list = {
     "scarlet_thorn",
 }
 
+-- list of all jokers
+local joker_list = {
+    "soldier",
+    "monk",
+    "turkey",
+}
+
 local mod_path = SMODS.current_mod.path
 SMODS.Atlas{
     object_type = "atlas",
@@ -40,6 +47,22 @@ SMODS.Atlas{
     px = 34,
     py = 34,
     frames = 21,
+}
+
+SMODS.Atlas{
+    object_type = "atlas",
+    key = "atlasclockjokers",
+    path = "ClockJokers.png",
+    px = 71,
+    py = 95,
+}
+
+SMODS.Rarity{
+    key = "forgotten",
+    loc_txt = {
+        name ="Forgotten",
+    },
+    badge_colour = HEX('630c2b'),
 }
 
 SMODS.Edition {
@@ -168,7 +191,7 @@ for k, v in ipairs(blind_list) do
 
     -- load if present
     if not blind then
-        sendErrorMessage("[ClockBosses] Cannot find blind with shorthand: " .. v)
+        sendErrorMessage("[BaOTC] Cannot find blind with shorthand: " .. v)
     else
         blind.key = v
         blind.discovered = false 
@@ -178,6 +201,26 @@ for k, v in ipairs(blind_list) do
         for k_, v_ in pairs(blind) do
             if type(v_) == 'function' then
                 blind_obj[k_] = blind[k_]
+            end
+        end
+    end
+end
+
+for k, v in ipairs(joker_list) do
+    local joker = NFS.load(mod_path .. "jokers/" .. v .. ".lua")()
+
+    -- load if present
+    if not joker then
+        sendErrorMessage("[BaOTC] Cannot find blind with shorthand: " .. v)
+    else
+        joker.key = v
+        joker.discovered = false
+
+        local joker_obj = SMODS.Joker(joker)
+
+        for k_, v_ in pairs(joker) do
+            if type(v_) == 'function' then
+                joker_obj[k_] = joker[k_]
             end
         end
     end
@@ -206,7 +249,7 @@ function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, v
             if G.GAME.blind then
                 G.GAME.blind:wiggle()
             end
-            card:set_edition("e_cbosses_phantom", true, true)
+            card:set_edition("e_baotc_phantom", true, true)
 
             
             card = G.deck:remove_card(card)
