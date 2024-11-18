@@ -36,6 +36,8 @@ local joker_list = {
     "soldier",
     "monk",
     "turkey",
+    "detective",
+    "washerwoman",
 }
 
 local mod_path = SMODS.current_mod.path

@@ -32,6 +32,7 @@
         "end_round",
         "get_highest",
         "Blind",
-        "eman_draw_phantom_card"
+        "eman_draw_phantom_card",
+        "poll_edition"
     ]
 }

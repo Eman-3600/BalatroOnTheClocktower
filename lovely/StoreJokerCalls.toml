@@ -1,0 +1,66 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''
+for _kk, vvv in ipairs(G.GAME.tags) do
+    if vvv:apply_to_run({type = 'store_joker_modify', card = v}) then break end
+end
+'''
+position = "after"
+payload = '''
+for _, present_joker in ipairs(G.jokers.cards) do
+    present_joker:calculate_joker({
+        eman_store_item = v
+    })
+end
+'''
+match_indent = false
+times = 1
+
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+for kk, vv in ipairs(G.GAME.tags) do
+    if vv:apply_to_run({type = 'store_joker_modify', card = forced_tag}) then break end
+end
+'''
+position = "after"
+payload = '''
+for _, present_joker in ipairs(G.jokers.cards) do
+    present_joker:calculate_joker({
+        eman_store_item = forced_tag
+    })
+end
+'''
+match_indent = false
+times = 1
+
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = '''
+for k, v in ipairs(G.GAME.tags) do
+    if v:apply_to_run({type = 'store_joker_modify', card = card}) then break end
+end
+'''
+position = "after"
+payload = '''
+for _, present_joker in ipairs(G.jokers.cards) do
+    present_joker:calculate_joker({
+        eman_store_item = card
+    })
+end
+'''
+match_indent = false
+times = 1

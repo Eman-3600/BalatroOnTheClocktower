@@ -34,6 +34,10 @@ joker.monk_get_mult = function (self)
     return 0
 end
 
+joker.in_pool = function (self)
+    return self:monk_get_mult() > 0
+end
+
 joker.loc_vars = function (self, info_queue, card)
     local total = self:monk_get_mult()
     return {vars = {
