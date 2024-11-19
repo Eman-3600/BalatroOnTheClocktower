@@ -23,7 +23,6 @@ times = 1
 
 
 
-
 [[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
@@ -42,7 +41,6 @@ end
 '''
 match_indent = false
 times = 1
-
 
 
 

@@ -42,6 +42,10 @@ local joker_list = {
     "raven",
     "mayor",
     "virgin_ring",
+    "choirboy",
+    "meta",
+
+    "elvis",
 }
 
 local mod_path = SMODS.current_mod.path

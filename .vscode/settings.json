@@ -33,6 +33,7 @@
         "get_highest",
         "Blind",
         "eman_draw_phantom_card",
-        "poll_edition"
+        "poll_edition",
+        "eman_evaluate_meta"
     ]
 }
