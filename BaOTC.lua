@@ -39,6 +39,9 @@ local joker_list = {
     "detective",
     "washerwoman",
     "gravedigger",
+    "raven",
+    "mayor",
+    "virgin_ring",
 }
 
 local mod_path = SMODS.current_mod.path

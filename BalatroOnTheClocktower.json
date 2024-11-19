@@ -6,6 +6,7 @@
 	"description": "Adds boss blinds based on the evil characters from Blood on the Clocktower.",
 	"prefix": "baotc",
 	"main_file": "BaOTC.lua",
+	"badge_colour": "a01116",
 	"priority": 0,
 	"version": "0.1.0",
 	"dependencies": [
