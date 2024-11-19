@@ -45,10 +45,13 @@ end
 joker.calculate = function (self, card, context)
     if context.joker_main then
         local total = self:soldier_get_chips()
-        return {
-            message = localize{type='variable',key='a_chips',vars={total}},
-            chip_mod = total
-        }
+
+        if total > 0 then
+            return {
+                message = localize{type='variable',key='a_chips',vars={total}},
+                chip_mod = total
+            }
+        end
     end
 end
 

@@ -8,7 +8,7 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = false,
-    config = {},
+    config = {extra = {has_wash = true}},
     loc_txt = {
         name ="Washerwoman",
         text={
@@ -20,15 +20,11 @@ local joker = {
     },
 }
 
-joker.set_ability = function (self, card, initial, delay_sprites)
-    card.ability.has_wash = true
-end
-
 joker.calculate = function (self, card, context)
-    if not context.blueprint and context.eman_store_item and card.ability.has_wash then
+    if not context.blueprint and context.eman_store_item and card.ability.extra.has_wash then
         
         if not context.eman_store_item.edition and not context.eman_store_item.temp_edition and context.eman_store_item.ability.set == 'Joker' then
-            card.ability.has_wash = false
+            card.ability.extra.has_wash = false
 
             local edition = poll_edition('washerwoman', nil, true, true)
             local store_card = context.eman_store_item
@@ -50,7 +46,7 @@ joker.calculate = function (self, card, context)
             }))
         end
     elseif not context.blueprint and context.ending_shop then
-        card.ability.has_wash = true
+        card.ability.extra.has_wash = true
     end
 end
 

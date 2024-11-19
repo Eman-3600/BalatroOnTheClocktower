@@ -26,11 +26,6 @@ joker.loc_vars = function (self, info_queue, card)
     }}
 end
 
-joker.set_ability = function (self, card, initial, delay_sprites)
-    card.ability.x_mult = 1
-    card.ability.extra = self.config.extra
-end
-
 joker.calculate = function (self, card, context)
     if context.selling_card and not context.blueprint and context.card.ability.set == 'Joker' then
         card.ability.x_mult = card.ability.x_mult + card.ability.extra

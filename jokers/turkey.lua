@@ -8,7 +8,7 @@ local joker = {
     eternal_compat = false,
     perishable_compat = true,
     blueprint_compat = false,
-    config = {slots = 4, slot_mod = 1},
+    config = {extra = {slots = 4, slot_mod = 1}},
     loc_txt = {
         name ="Turkey",
         text={
@@ -18,13 +18,6 @@ local joker = {
         },
     },
 }
-
-joker.set_ability = function (self, card, initial, delay_sprites)
-    card.ability.extra = {
-        slots = self.config.slots,
-        slot_mod = self.config.slot_mod,
-    }
-end
 
 joker.loc_vars = function (self, info_queue, card)
     return {vars = {

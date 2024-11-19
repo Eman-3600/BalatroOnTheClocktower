@@ -12,7 +12,7 @@ local joker = {
     loc_txt = {
         name ="Detective",
         text={
-            "{C:red}X#1#{} Mult",
+            "{X:mult,C:white}X#1#{} Mult",
             "during a {C:attention}Boss Blind{}",
         },
     },
@@ -20,15 +20,15 @@ local joker = {
 
 joker.loc_vars = function (self, info_queue, card)
     return {vars = {
-        self.config.extra,
+        card.ability.extra,
     }}
 end
 
 joker.calculate = function (self, card, context)
     if context.joker_main and G.GAME.blind.boss then
         return {
-            message = localize{type='variable',key='a_xmult',vars={self.config.extra}},
-            Xmult_mod = self.config.extra
+            message = localize{type='variable',key='a_xmult',vars={card.ability.extra}},
+            Xmult_mod = card.ability.extra
         }
     end
 end

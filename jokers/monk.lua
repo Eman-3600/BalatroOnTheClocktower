@@ -49,10 +49,13 @@ end
 joker.calculate = function (self, card, context)
     if context.joker_main then
         local total = self:monk_get_mult()
-        return {
-            message = localize{type='variable',key='a_mult',vars={total}},
-            mult_mod = total
-        }
+
+        if total > 0 then
+            return {
+                message = localize{type='variable',key='a_mult',vars={total}},
+                mult_mod = total
+            }
+        end
     end
 end
 
