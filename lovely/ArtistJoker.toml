@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "check_and_set_high_score('hand', hand_chips*mult)"
+position = "after"
+payload = '''
+G.GAME.last_hand_fire = (hand_chips*mult >= G.GAME.blind.chips)
+'''
+match_indent = false
+times = 1

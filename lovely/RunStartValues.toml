@@ -9,6 +9,7 @@ pattern = "self.GAME.dollars = self.GAME.starting_params.dollars"
 position = "after"
 payload = '''
 self.GAME.clockmakers_taken = 0
+self.GAME.last_hand_fire = false
 '''
 match_indent = false
 times = 1

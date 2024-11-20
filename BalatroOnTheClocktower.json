@@ -3,7 +3,7 @@
 	"name": "Balatro on the Clocktower",
 	"display_name": "BaOTC",
 	"author": ["Eman3600"],
-	"description": "Adds boss blinds based on the evil characters from Blood on the Clocktower.",
+	"description": "Adds jokers and boss blinds based on the characters from Blood on the Clocktower.",
 	"prefix": "baotc",
 	"main_file": "BaOTC.lua",
 	"badge_colour": "a01116",

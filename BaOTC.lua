@@ -45,6 +45,7 @@ local joker_list = {
     "virgin_ring",
     "choirboy",
     "meta",
+    "artist",
 
     "elvis",
 }
