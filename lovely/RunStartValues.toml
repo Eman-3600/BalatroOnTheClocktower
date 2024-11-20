@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = "self.GAME.dollars = self.GAME.starting_params.dollars"
+position = "after"
+payload = '''
+self.GAME.clockmakers_taken = 0
+'''
+match_indent = false
+times = 1

@@ -64,7 +64,7 @@ joker.calculate = function (self, card, context)
             G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slot_mod
             card.ability.extra.slots = card.ability.extra.slots - card.ability.extra.slot_mod
             G.E_MANAGER:add_event(Event({
-                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize{type='variable',key='a_remaining',vars={card.ability.extra.slots}}}); return true
+                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.slots..""}); return true
                 end}))
         end
     end

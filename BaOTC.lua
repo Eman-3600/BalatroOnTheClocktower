@@ -33,6 +33,7 @@ local blind_list = {
 
 -- list of all jokers
 local joker_list = {
+    "clockmaker",
     "soldier",
     "monk",
     "turkey",
