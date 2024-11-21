@@ -10,6 +10,11 @@ position = "after"
 payload = '''
 self.GAME.clockmakers_taken = 0
 self.GAME.last_hand_fire = false
+for k, v in pairs(self.GAME.hands) do
+    if not v.visible then
+        v.eman_secret = true
+    end
+end
 '''
 match_indent = false
 times = 1

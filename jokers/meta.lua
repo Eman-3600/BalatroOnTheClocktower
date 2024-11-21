@@ -29,6 +29,9 @@ function eman_evaluate_meta(effects)
     if effects.x_mult then
         effect_count = effect_count + 1
     end
+    if effects.x_mult_mod then
+        effect_count = effect_count + 1
+    end
     if effects.mult_mod then
         effect_count = effect_count + 1
     end

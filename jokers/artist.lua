@@ -14,7 +14,7 @@ local joker = {
         text={
             "{C:attention}+#1#{} hand size if",
             "last hand caught fire",
-            "{C:inactive}(Currently {C:attention}#2#{C:inactive})"
+            "{X:attention,C:white} #2# {}"
         },
     },
 }

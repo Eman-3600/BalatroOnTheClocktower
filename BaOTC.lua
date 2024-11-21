@@ -46,6 +46,8 @@ local joker_list = {
     "choirboy",
     "meta",
     "artist",
+    "scissors",
+    "the_anomaly",
 
     "elvis",
 }
@@ -367,18 +369,33 @@ end
 -- Creates and returns the different ways in which the given cards can be considered to be different suits
 -- If this is impossible, will return an empty table instead
 -- Used by the Word to flip cards of different suits
-function create_unique_suit_combo(initial, suit_set)
+function create_unique_suit_combo(initial, suit_set, keep_old)
     local superpositions = {}
 
     if #initial == 0 then
+
+        superpositions.max_chain = 0
+
         for _, suit in ipairs(suit_set) do
             local p = {}
             p[suit] = true
 
             table.insert(superpositions, p)
+
+            superpositions.max_chain = 1
         end
 
         return superpositions
+    end
+
+    if keep_old then
+        for _, position in ipairs(initial) do
+            table.insert(superpositions, position)
+        end
+
+        superpositions.max_chain = initial.max_chain
+    else
+        superpositions.max_chain = 0
     end
 
     for _, suit in ipairs(suit_set) do
@@ -388,8 +405,16 @@ function create_unique_suit_combo(initial, suit_set)
 
                 p[suit] = true
 
+                local entries = 1
+
                 for k, v in pairs(position) do
                     p[k] = true
+
+                    entries = entries + 1
+                end
+
+                if entries > superpositions.max_chain then
+                    superpositions.max_chain = entries
                 end
 
                 table.insert(superpositions, p)

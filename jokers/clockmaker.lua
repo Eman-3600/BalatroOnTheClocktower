@@ -12,7 +12,7 @@ local joker = {
     loc_txt = {
         name ="Clockmaker",
         text={
-            "{C:blue}+#1#{} Chips",
+            "{C:chips}+#1#{} Chips",
         },
     },
 }

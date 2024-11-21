@@ -12,7 +12,7 @@ local joker = {
     loc_txt = {
         name ="Engagement Ring",
         text={
-            "This Joker gains {C:blue}+#2#{} Chips",
+            "This Joker gains {C:chips}+#2#{} Chips",
             "each time an {C:attention}enhanced{}",
             "card is discarded",
             "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
