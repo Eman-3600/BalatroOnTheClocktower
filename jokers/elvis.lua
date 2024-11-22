@@ -7,7 +7,7 @@ local joker = {
     pos = {x = 9, y = 0},
     soul_pos = {x = 9, y = 1},
     eternal_compat = true,
-    perishable_compat = true,
+    perishable_compat = false,
     blueprint_compat = true,
     config = {extra = {x_mult = 1, x_mult_mod = 0.5, active = false}},
     loc_txt = {

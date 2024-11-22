@@ -8,8 +8,8 @@ local blind = {
     loc_txt = {
         name ="The Seat",
         text={
-            "Enhanced cards",
-            "are drawn last",
+            "Enhanced cards are at",
+            "the bottom of the deck",
         },
     },
 }

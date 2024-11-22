@@ -1,0 +1,73 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "for i=1, hand_space do --draw cards from deckL"
+position = "before"
+payload = '''
+local rig_counts = {}
+for _, present_joker in ipairs(G.jokers.cards) do
+    rig_counts[present_joker] = 0
+end
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "draw_card(G.deck,G.hand, i*100/hand_space,'up', true)"
+position = "at"
+payload = '''
+local rigged_draw = nil
+for _, present_joker in ipairs(G.jokers.cards) do
+    local eval = present_joker:calculate_joker({
+        eman_choose_drawn_card = {
+            rig_counts = rig_counts
+        }
+    })
+
+    if eval and eval.rigged_draw then
+        rigged_draw = {
+            card = eval.rigged_draw,
+            joker = present_joker,
+            eval = eval
+        }
+
+        eval.rigged_draw.ability.queued_draw = true
+
+        rig_counts[present_joker] = rig_counts[present_joker] + 1
+
+        break
+    end
+end
+
+local drawn_card
+
+if rigged_draw then
+    draw_card(G.deck,G.hand, i*100/hand_space,'up', true, rigged_draw.card)
+    card_eval_status_text(rigged_draw.joker, 'extra', nil, nil, nil, rigged_draw.eval)
+else
+    draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
+end
+'''
+match_indent = true
+times = 2
+
+
+
+[[patches]]
+[patches.pattern]
+target = "cardarea.lua"
+pattern = "card:set_card_area(self)"
+position = "after"
+payload = '''
+card.ability.queued_draw = nil
+'''
+match_indent = true
+times = 1

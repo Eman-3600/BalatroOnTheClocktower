@@ -50,6 +50,9 @@ local joker_list = {
     "the_anomaly",
     "love_letter",
     "dreamer",
+    "wildflower",
+    "old_news",
+    "autoaim",
 
     "elvis",
 }

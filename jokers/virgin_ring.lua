@@ -6,7 +6,7 @@ local joker = {
     cost = 8,
     pos = {x = 8, y = 0},
     eternal_compat = true,
-    perishable_compat = true,
+    perishable_compat = false,
     blueprint_compat = true,
     config = {extra = {chips = 0, chips_mod = 8}},
     loc_txt = {
