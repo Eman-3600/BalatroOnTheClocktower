@@ -48,6 +48,7 @@ local joker_list = {
     "artist",
     "scissors",
     "the_anomaly",
+    "love_letter",
 
     "elvis",
 }

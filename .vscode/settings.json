@@ -34,6 +34,9 @@
         "Blind",
         "eman_draw_phantom_card",
         "poll_edition",
-        "eman_evaluate_meta"
+        "eman_evaluate_meta",
+        "create_card",
+        "add_tag",
+        "Tag"
     ]
 }

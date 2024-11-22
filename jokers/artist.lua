@@ -41,6 +41,7 @@ joker.loc_vars = function (self, info_queue, card)
 end
 
 joker.update = function (self, card, dt)
+
     local now_active = G.GAME.last_hand_fire
 
     if now_active and not card.ability.extra.active and not card.debuff then
@@ -48,25 +49,25 @@ joker.update = function (self, card, dt)
 
         if card.area == G.jokers then
             G.hand:change_size(card.ability.extra.h_size)
+
+            G.E_MANAGER:add_event(Event({ func = function()
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_active_ex'), colour = G.C.FILTER})
+    
+                return true
+            end}))
         end
-
-        G.E_MANAGER:add_event(Event({ func = function()
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_active_ex'), colour = G.C.FILTER})
-
-            return true
-        end}))
     elseif card.ability.extra.active and not now_active and not card.debuff then
         card.ability.extra.active = false
 
         if card.area == G.jokers then
             G.hand:change_size(-card.ability.extra.h_size)
+
+            G.E_MANAGER:add_event(Event({ func = function()
+                card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
+    
+                return true
+            end}))
         end
-
-        G.E_MANAGER:add_event(Event({ func = function()
-            card_eval_status_text(card, 'extra', nil, nil, nil, {message = localize('k_reset')})
-
-            return true
-        end}))
     end
 end
 
