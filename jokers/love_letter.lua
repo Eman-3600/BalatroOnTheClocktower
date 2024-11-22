@@ -149,7 +149,7 @@ joker.love_letter_effects = {
                             return true
                         end)}))
                 end},
-                colour = G.C.FILTER,
+                colour = G.C.GREEN,
                 card = card
             }
         end

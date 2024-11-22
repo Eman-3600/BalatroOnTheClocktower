@@ -18,7 +18,7 @@ for _, present_joker in ipairs(G.jokers.cards) do
     })
 end
 '''
-match_indent = false
+match_indent = true
 times = 1
 
 
@@ -39,7 +39,7 @@ for _, present_joker in ipairs(G.jokers.cards) do
     })
 end
 '''
-match_indent = false
+match_indent = true
 times = 1
 
 
@@ -60,5 +60,23 @@ for _, present_joker in ipairs(G.jokers.cards) do
     })
 end
 '''
-match_indent = false
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "card:start_materialize({G.C.WHITE, G.C.WHITE}, nil, 1.5*G.SETTINGS.GAMESPEED)"
+position = "before"
+payload = '''
+for _, present_joker in ipairs(G.jokers.cards) do
+    present_joker:calculate_joker({
+        eman_booster_item = card,
+        eman_booster_pack = self
+    })
+end
+'''
+match_indent = true
 times = 1
