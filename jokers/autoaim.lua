@@ -25,11 +25,11 @@ joker.loc_vars = function (self, info_queue, card)
 end
 
 joker.in_pool = function (self)
-    
+
     for _, v in ipairs(G.playing_cards) do
         if v.config.center == G.P_CENTERS.m_stone then return true end
     end
-    
+
     return false
 end
 
@@ -44,7 +44,7 @@ joker.calculate = function (self, card, context)
                 -- queued_draw is used to avoid drawing the same card twice
                 if v:get_id() == 14 and not v.ability.queued_draw then
                     return {
-                        message = 'Rigged!',
+                        message = 'Fire!',
                         colour = G.C.FILTER,
                         card = card,
                         rigged_draw = v

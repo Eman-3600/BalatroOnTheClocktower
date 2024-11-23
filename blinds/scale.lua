@@ -8,26 +8,13 @@ local blind = {
     loc_txt = {
         name ="The Scale",
         text={
-            "Scoring over #1# chips",
-            "makes your Jokers eternal",
+            "Listed probabilities are",
+            "reduced to nearly 0",
         },
     },
 }
 
-blind.in_pool = function (self)
-
-    if G.jokers and (self.boss.min <= math.max(1, G.GAME.round_resets.ante)) then
-    
-        for _, joker in ipairs(G.jokers.cards) do
-            if joker.config.center.eternal_compat and not joker.ability.eternal and not joker.ability.perishable then
-                return true
-            end
-        end
-    end
-
-    return false
-end
-
+--[[
 blind.defeat = function (self)
 
     if (not G.GAME.blind.disabled) and (G.GAME.chips >= G.GAME.blind.chips * 2) then
@@ -39,16 +26,25 @@ blind.defeat = function (self)
         end
     end
 end
+]]--
 
-blind.loc_vars = function (self)
+blind.set_blind = function (self)
+    self.prepped = true
+    self.probability_change = 65356
 
-    return { vars = {""..(get_blind_amount(G.GAME.round_resets.ante) * self.mult * G.GAME.starting_params.ante_scaling * 2)}}
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal / self.probability_change
 end
 
-blind.collection_loc_vars = function (self)
+blind.disable = function (self)
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal * self.probability_change
 
-    self.vars = {"200% of"}
-    return self.vars
+    self.probability_change = 1
+end
+
+blind.defeat = function (self)
+    if not G.GAME.blind.disabled then
+        G.GAME.probabilities.normal = G.GAME.probabilities.normal * self.probability_change
+    end
 end
 
 
