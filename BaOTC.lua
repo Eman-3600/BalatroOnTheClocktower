@@ -54,6 +54,12 @@ local joker_list = {
     "old_news",
     "autoaim",
     "snake_charmer",
+    "librarian",
+
+    "isolation",
+    "quicksilver",
+    "servitude",
+    "diplomacy",
 
     "elvis",
 }

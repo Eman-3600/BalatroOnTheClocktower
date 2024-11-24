@@ -70,4 +70,4 @@ payload = '''
 card.ability.queued_draw = nil
 '''
 match_indent = true
-times = 1
+times = 2

@@ -1,0 +1,14 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/misc_functions.lua"
+pattern = "return G.ARGS.LOC_COLOURS[_c] or _default or G.C.UI.TEXT_DARK"
+position = "before"
+payload = '''
+G.ARGS.LOC_COLOURS['baotc_forgotten'] = HEX("630c2b")
+'''
+match_indent = true
+times = 1

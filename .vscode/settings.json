@@ -38,6 +38,7 @@
         "create_card",
         "add_tag",
         "Tag",
-        "ease_discard"
+        "ease_discard",
+        "ease_dollars"
     ]
 }

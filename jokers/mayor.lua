@@ -39,7 +39,7 @@ end
 joker.calculate = function (self, card, context)
     if context.individual then
 
-        if context.other_card.seal then
+        if context.other_card.seal and context.cardarea == G.play then
             return {
                 x_mult = card.ability.extra,
                 card = card

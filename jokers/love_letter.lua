@@ -32,7 +32,7 @@ joker.love_letter_effects = {
         weight = 35,
         func = function (card, wild_card, context)
 
-            local mult = pseudorandom(pseudoseed('lov2'), card.ability.extra.mult.min, card.ability.extra.mult.max)
+            local mult = pseudorandom(pseudoseed('love_letter2'), card.ability.extra.mult.min, card.ability.extra.mult.max)
 
             return {
                 card = card,
@@ -44,7 +44,7 @@ joker.love_letter_effects = {
         weight = 35,
         func = function (card, wild_card, context)
 
-            local chips = pseudorandom(pseudoseed('lov2'), card.ability.extra.chips.min, card.ability.extra.chips.max)
+            local chips = pseudorandom(pseudoseed('love_letter2'), card.ability.extra.chips.min, card.ability.extra.chips.max)
 
             return {
                 card = card,
@@ -56,7 +56,7 @@ joker.love_letter_effects = {
         weight = 15,
         func = function (card, wild_card, context)
 
-            local xmult = pseudorandom(pseudoseed('lov2'), card.ability.extra.x_mult.min, card.ability.extra.x_mult.max) * card.ability.extra.x_mult.fraction
+            local xmult = pseudorandom(pseudoseed('love_letter2'), card.ability.extra.x_mult.min, card.ability.extra.x_mult.max) * card.ability.extra.x_mult.fraction
 
             return {
                 card = card,
@@ -68,7 +68,7 @@ joker.love_letter_effects = {
         weight = 10,
         func = function (card, wild_card, context)
 
-            local dollars = pseudorandom(pseudoseed('lov2'), card.ability.extra.dollars.min, card.ability.extra.dollars.max)
+            local dollars = pseudorandom(pseudoseed('love_letter2'), card.ability.extra.dollars.min, card.ability.extra.dollars.max)
             G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + dollars
             G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
 
@@ -107,7 +107,7 @@ joker.love_letter_effects = {
                             trigger = 'before',
                             delay = 0.0,
                             func = (function()
-                                local _card = create_card('Tarot',G.consumeables, nil, nil, nil, nil, nil, 'lov2')
+                                local _card = create_card('Tarot',G.consumeables, nil, nil, nil, nil, nil, 'love_letter2')
                                 _card:add_to_deck()
                                 G.consumeables:emplace(_card)
                                 G.GAME.consumeable_buffer = 0
@@ -119,7 +119,7 @@ joker.love_letter_effects = {
                 }
 
             else
-                local dollars = pseudorandom(pseudoseed('lov2'), card.ability.extra.dollars.min, card.ability.extra.dollars.max)
+                local dollars = pseudorandom(pseudoseed('love_letter2'), card.ability.extra.dollars.min, card.ability.extra.dollars.max)
                 G.GAME.dollar_buffer = (G.GAME.dollar_buffer or 0) + dollars
                 G.E_MANAGER:add_event(Event({func = (function() G.GAME.dollar_buffer = 0; return true end)}))
     
@@ -140,7 +140,7 @@ joker.love_letter_effects = {
                         trigger = 'before',
                         delay = 0.0,
                         func = (function()
-                            local tag = pseudorandom_element(G.P_TAGS, pseudoseed('lov2'))
+                            local tag = pseudorandom_element(G.P_TAGS, pseudoseed('love_letter2'))
 
                             add_tag(Tag(tag.key))
                             play_sound('generic1', 0.9 + math.random()*0.1, 0.8)
@@ -167,7 +167,7 @@ joker.calculate = function (self, card, context)
 
         if context.other_card.config.center == G.P_CENTERS.m_wild then
             
-            local roll = pseudorandom(pseudoseed('lov'), 1, self.love_letter_effects.total_weight)
+            local roll = pseudorandom(pseudoseed('love_letter'), 1, self.love_letter_effects.total_weight)
 
             for _, effect in ipairs(self.love_letter_effects) do
                 if roll <= effect.weight then
