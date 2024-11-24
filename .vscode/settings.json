@@ -37,6 +37,7 @@
         "eman_evaluate_meta",
         "create_card",
         "add_tag",
-        "Tag"
+        "Tag",
+        "ease_discard"
     ]
 }
