@@ -13,7 +13,7 @@ local joker = {
         name ="Librarian",
         text={
             "{C:baotc_forgotten}Forgotten{} Jokers",
-            "can appear in the shop.",
+            "can appear in the shop",
         },
     },
 }
@@ -21,7 +21,7 @@ local joker = {
 joker.calculate = function (self, card, context)
     if not context.blueprint and context.eman_modify_pool_rarity then
         
-        if not context.eman_modify_pool_rarity.rarity and pseudorandom(pseudoseed('librarian'..(context.eman_modify_pool_rarity._append or ''))) > 0.98 then
+        if G.GAME.eman_pool_target == G.shop_jokers and pseudorandom(pseudoseed('librarian'..(context.eman_modify_pool_rarity._append or ''))) > 0.97 then
             return {rarity = 'baotc_forgotten'}
         end
     end

@@ -83,6 +83,14 @@ SMODS.Atlas{
     py = 95,
 }
 
+SMODS.Atlas{
+    object_type = "atlas",
+    key = "atlasclockvouchers",
+    path = "ClockVouchers.png",
+    px = 71,
+    py = 95,
+}
+
 SMODS.Rarity{
     key = "forgotten",
     loc_txt = {
@@ -108,6 +116,38 @@ SMODS.Edition {
             "current blind ends",
         },
     },
+}
+
+SMODS.Voucher {
+    key = "history",
+    atlas = "atlasclockvouchers",
+    pos = {x = 0, y = 0},
+    loc_txt = {
+        name = "History",
+        text = {
+            "{C:baotc_forgotten}Forgotten{} Jokers may",
+            "appear in any of",
+            "the {C:attention}Buffoon Packs",
+        },
+    },
+}
+
+SMODS.Voucher {
+    key = "library",
+    atlas = "atlasclockvouchers",
+    pos = {x = 0, y = 1},
+    config = {extra = 1},
+    loc_txt = {
+        name = "Library",
+        text = {
+            "{C:attention}+#1#{} Card in",
+            "all {C:attention}Booster Packs",
+        },
+    },
+    loc_vars = function (self, info_queue, card)
+        return {vars = {card.ability.extra}}
+    end,
+    requires = {'v_baotc_history'},
 }
 
 -- pattern basically taken from Cryptid

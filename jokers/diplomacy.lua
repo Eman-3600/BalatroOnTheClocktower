@@ -13,9 +13,9 @@ local joker = {
         name ="Diplomacy",
         text={
             "{C:money}Rental {C:legendary,E:1}Legendary{} Jokers",
-            "can appear in the shop.",
+            "can appear in the shop",
             "When one is bought,",
-            "destroy this Joker."
+            "destroy this Joker"
         },
     },
 }
@@ -27,11 +27,12 @@ joker.calculate = function (self, card, context)
             local store_card = context.eman_store_item
 
             store_card:set_rental(true)
+            store_card.ability.perishable = false
             store_card:set_cost()
         end
     elseif not context.blueprint and context.eman_modify_pool_rarity then
         
-        if not context.eman_modify_pool_rarity.rarity and pseudorandom(pseudoseed('diplomacy'..(context.eman_modify_pool_rarity._append or ''))) > 0.98 then
+        if G.GAME.eman_pool_target == G.shop_jokers and pseudorandom(pseudoseed('diplomacy'..(context.eman_modify_pool_rarity._append or ''))) > 0.95 then
             return {rarity = 4}
         end
     elseif not context.blueprint and context.buying_card then

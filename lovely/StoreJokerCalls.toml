@@ -89,12 +89,60 @@ target = "functions/common_events.lua"
 pattern = "_starting_pool, _pool_key = G.P_JOKER_RARITY_POOLS[rarity], 'Joker'..rarity..((not _legendary and _append) or '')"
 position = "before"
 payload = '''
-for _, present_joker in ipairs(G.jokers.cards) do
-    local eman_rarity_eval = present_joker:calculate_joker({eman_modify_pool_rarity = {rarity = _rarity, legendary = _legendary, append = _append}})
+if not _rarity and not _legendary then
+    for _, present_joker in ipairs(G.jokers.cards) do
+        local eman_rarity_eval = present_joker:calculate_joker({eman_modify_pool_rarity = {rarity = rarity, legendary = _legendary, append = _append}})
 
-    if eman_rarity_eval and eman_rarity_eval.rarity then
-        rarity = eman_rarity_eval.rarity
+        if eman_rarity_eval and eman_rarity_eval.rarity then
+            rarity = eman_rarity_eval.rarity
+        end
     end
+
+    if G.GAME.used_vouchers.v_baotc_history and G.GAME.eman_pool_target == G.pack_cards and pseudorandom('history') > 0.92 then
+        rarity = 'baotc_forgotten'
+    end
+end
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local _pool, _pool_key = get_current_pool(_type, _rarity, legendary, key_append)"
+position = "before"
+payload = '''
+G.GAME.eman_pool_target = area
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "local _pool, _pool_key = get_current_pool(_type, _rarity, legendary, key_append)"
+position = "after"
+payload = '''
+G.GAME.eman_pool_target = nil
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
+position = "before"
+payload = '''
+if G.GAME.used_vouchers.v_baotc_library then
+    G.GAME.pack_size = G.GAME.pack_size + 1
+    self.ability.extra = self.ability.extra + 1
 end
 '''
 match_indent = true
