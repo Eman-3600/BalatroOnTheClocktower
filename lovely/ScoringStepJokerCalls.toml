@@ -1,0 +1,22 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "if modded then update_hand_text({sound = 'chips2', modded = modded}, {chips = hand_chips, mult = mult}) end"
+position = "after"
+payload = '''
+for _, present_joker in ipairs(G.jokers.cards) do
+    local eval = present_joker:calculate_joker({eman_modify_hand = {chips = hand_chips, mult = mult}})
+
+    if eval then
+        mult = mod_mult(eval.mult or mult)
+        hand_chips = mod_chips(eval.chips or hand_chips)
+        update_hand_text({sound = 'chips2', modded = true}, {chips = hand_chips, mult = mult})
+    end
+end
+'''
+match_indent = false
+times = 1

@@ -60,6 +60,7 @@ local joker_list = {
     "quicksilver",
     "servitude",
     "diplomacy",
+    "rocket_surgery",
 
     "elvis",
 }
