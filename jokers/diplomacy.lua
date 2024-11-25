@@ -20,6 +20,11 @@ local joker = {
     },
 }
 
+joker.in_pool = function (self)
+
+    return not G.GAME.eman_force_eternal_forgotten
+end
+
 joker.calculate = function (self, card, context)
     if not context.blueprint and context.eman_store_item then
         

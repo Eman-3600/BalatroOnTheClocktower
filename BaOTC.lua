@@ -85,8 +85,8 @@ SMODS.Atlas{
 
 SMODS.Atlas{
     object_type = "atlas",
-    key = "atlasclockvouchers",
-    path = "ClockVouchers.png",
+    key = "atlasclockextras",
+    path = "ClockExtras.png",
     px = 71,
     py = 95,
 }
@@ -120,7 +120,7 @@ SMODS.Edition {
 
 SMODS.Voucher {
     key = "history",
-    atlas = "atlasclockvouchers",
+    atlas = "atlasclockextras",
     pos = {x = 0, y = 0},
     loc_txt = {
         name = "History",
@@ -134,7 +134,7 @@ SMODS.Voucher {
 
 SMODS.Voucher {
     key = "library",
-    atlas = "atlasclockvouchers",
+    atlas = "atlasclockextras",
     pos = {x = 0, y = 1},
     config = {extra = 1},
     loc_txt = {
@@ -148,6 +148,40 @@ SMODS.Voucher {
         return {vars = {card.ability.extra}}
     end,
     requires = {'v_baotc_history'},
+}
+
+SMODS.Consumable {
+    key = "shadow",
+    set = 'Spectral',
+    atlas = "atlasclockextras",
+    pos = {x = 1, y = 0},
+    config = {},
+    loc_txt = {
+        name = "Shadow",
+        text = {
+            "Creates an {C:attention}Eternal",
+            "{C:baotc_forgotten}Forgotten{} Joker",
+        },
+    },
+    can_use = function (self, card)
+        return #G.jokers.cards < G.jokers.config.card_limit or card.area == G.jokers
+    end,
+    use = function (self, card, area, copier)
+
+        local used_tarot = copier or card
+
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            play_sound('timpani')
+            G.GAME.eman_force_eternal_forgotten = true
+            local _card = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'shadow')
+            G.GAME.eman_force_eternal_forgotten = false
+            _card:set_eternal(true)
+            _card:add_to_deck()
+            G.jokers:emplace(_card)
+            used_tarot:juice_up(0.3, 0.5)
+            return true end }))
+        delay(0.6)
+    end,
 }
 
 -- pattern basically taken from Cryptid

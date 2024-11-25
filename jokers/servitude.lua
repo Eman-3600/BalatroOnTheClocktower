@@ -25,7 +25,7 @@ joker.loc_vars = function (self, info_queue, card)
 end
 
 joker.calculate = function (self, card, context)
-    if context.other_joker then
+    if context.other_joker and context.other_joker.ability.set == 'Joker' then
 
         if context.other_joker ~= card then
             G.E_MANAGER:add_event(Event({
