@@ -55,6 +55,7 @@ local joker_list = {
     "autoaim",
     "snake_charmer",
     "librarian",
+    "gambler",
 
     "isolation",
     "quicksilver",

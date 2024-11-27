@@ -9,7 +9,7 @@ pattern = "if modded then update_hand_text({sound = 'chips2', modded = modded}, 
 position = "after"
 payload = '''
 for _, present_joker in ipairs(G.jokers.cards) do
-    local eval = present_joker:calculate_joker({eman_modify_hand = {chips = hand_chips, mult = mult}})
+    local eval = present_joker:calculate_joker({eman_modify_hand = {chips = hand_chips, mult = mult, cards = G.play.cards, poker_hands = poker_hands}})
 
     if eval then
         mult = mod_mult(eval.mult or mult)
