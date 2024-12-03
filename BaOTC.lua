@@ -56,6 +56,7 @@ local joker_list = {
     "snake_charmer",
     "librarian",
     "gambler",
+    "farmer",
 
     "isolation",
     "quicksilver",

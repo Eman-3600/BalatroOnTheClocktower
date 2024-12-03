@@ -21,7 +21,7 @@ end
 
 -- Called directly after drawing cards from the deck to hand if the boss is enabled
 -- I probably didn't need to make a custom function & inject but it works and
--- hasn't 
+-- hasn't caused infinite loops
 blind.eman_after_draw = function (self, count)
 
     G.E_MANAGER:add_event(Event({

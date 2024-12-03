@@ -8,12 +8,12 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {extra = {aces = 1}},
+    config = {extra = {aces = 2}},
     loc_txt = {
         name ="Autoaim",
         text={
-            "If possible, always draw",
-            "at least {C:attention}#1# Ace{}",
+            "On first draw, always draw",
+            "at least {C:attention}#1# Aces{}",
         },
     },
 }
@@ -34,17 +34,25 @@ joker.in_pool = function (self)
 end
 
 joker.calculate = function (self, card, context)
-    if context.eman_choose_drawn_card then
 
-        local triggered_card = context.blueprint_card or card
+    local triggered_card = context.blueprint_card or card
 
-        if context.eman_choose_drawn_card.rig_counts[triggered_card] < 1 then
+    if context.setting_blind then
+        
+        triggered_card.ability.first_draw = true
+    elseif context.eman_choose_drawn_card and triggered_card.ability.first_draw then
+
+        if context.eman_choose_drawn_card.rig_counts[triggered_card] < card.ability.extra.aces then
+
+            if context.eman_choose_drawn_card.rig_counts[triggered_card] >= card.ability.extra.aces - 1 then
+                triggered_card.ability.first_draw = nil
+            end
 
             for _, v in ipairs(G.deck.cards) do
                 -- queued_draw is used to avoid drawing the same card twice
                 if v:get_id() == 14 and not v.ability.queued_draw then
                     return {
-                        message = 'Fire!',
+                        message = 'Ace!',
                         colour = G.C.FILTER,
                         card = card,
                         rigged_draw = v
