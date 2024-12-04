@@ -57,12 +57,14 @@ local joker_list = {
     "librarian",
     "gambler",
     "farmer",
+    "orderly",
 
     "isolation",
     "quicksilver",
     "servitude",
     "diplomacy",
     "rocket_surgery",
+    "astrolabe",
 
     "elvis",
 }

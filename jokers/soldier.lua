@@ -8,7 +8,7 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {chips_per = 25},
+    config = {chips_per = 20},
     loc_txt = {
         name ="Soldier",
         text={

@@ -8,39 +8,46 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {},
+    config = {extra = {h_size = 1, h_size_total = 0}},
     loc_txt = {
         name ="Isolation",
         text={
-            "If {C:attention}poker hand{} is a",
-            "{C:attention}secret hand{}, create a",
-            "random {C:spectral}Spectral{} card",
-            "{C:inactive}(Must have room)"
+            "If played hand has only",
+            "{C:attention}1{} card, create a random",
+            "{C:spectral}Spectral{} card and incur",
+            "{C:red}-#1#{} hand size this round"
         },
     },
 }
 
-joker.in_pool = function (self)
-    
-    for k, v in pairs(G.GAME.hands) do
-        if v.eman_secret and v.visible then return true end
-    end
-    
-    return false
+joker.loc_vars = function (self, info_queue, card)
+    return {vars = {
+        card.ability.extra.h_size,
+    }}
+end
+
+joker.add_to_deck = function (self, card, from_debuff)
+    G.hand:change_size(card.ability.extra.h_size_total)
+end
+
+joker.remove_from_deck = function (self, card, from_debuff)
+    G.hand:change_size(-card.ability.extra.h_size_total)
 end
 
 joker.calculate = function (self, card, context)
     if context.joker_main and #G.consumeables.cards + G.GAME.consumeable_buffer < G.consumeables.config.card_limit then
 
-        local poker_hand = G.GAME.hands[context.scoring_name]
-
-        if poker_hand.eman_secret then
+        if #context.full_hand == 1 then
             
             G.GAME.consumeable_buffer = G.GAME.consumeable_buffer + 1
             G.E_MANAGER:add_event(Event({
                 trigger = 'before',
                 delay = 0.0,
                 func = (function()
+
+                    G.hand:change_size(-card.ability.extra.h_size)
+                    card.ability.extra.h_size_total = card.ability.extra.h_size_total - card.ability.extra.h_size
+
                     local card = create_card('Spectral',G.consumeables, nil, nil, nil, nil, nil, 'isolation')
                     card:add_to_deck()
                     G.consumeables:emplace(card)
@@ -53,6 +60,9 @@ joker.calculate = function (self, card, context)
                 card = self
             }
         end
+    elseif context.end_of_round and not context.individual and not context.repetition and not context.blueprint then
+        G.hand:change_size(-card.ability.extra.h_size_total)
+        card.ability.extra.h_size_total = 0
     end
 end
 

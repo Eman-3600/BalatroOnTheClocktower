@@ -14,6 +14,15 @@ for _, present_joker in ipairs(G.jokers.cards) do
     if eval then
         mult = mod_mult(eval.mult or mult)
         hand_chips = mod_chips(eval.chips or hand_chips)
+        G.E_MANAGER:add_event(Event({
+            trigger = 'immediate',
+            func = function ()
+    
+                play_sound('multhit1', 0.8)
+    
+                return true
+            end
+        }))
         update_hand_text({sound = 'chips2', modded = true}, {chips = hand_chips, mult = mult})
     end
 end

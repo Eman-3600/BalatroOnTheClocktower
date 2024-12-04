@@ -50,6 +50,10 @@ blind.eman_after_draw = function (self, count)
 
 end
 
+blind.recalc_debuff = function (self, card, from_blind)
+    return card.debuff
+end
+
 
 
 return blind

@@ -8,11 +8,12 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {extra = {}},
+    config = {extra = {chance = 3}},
     loc_txt = {
         name ="Farmer",
         text={
-            "Scored {C:attention}7s{} turn a",
+            "Scored {C:attention}7s{} have a",
+            "{C:green}#1# in #2#{} chance to turn a",
             "card in hand into a {C:attention}7{}",
         },
     },
@@ -20,7 +21,8 @@ local joker = {
 
 joker.loc_vars = function (self, info_queue, card)
     return {vars = {
-        
+        G.GAME.probabilities.normal,
+        card.ability.extra.chance
     }}
 end
 
@@ -31,12 +33,15 @@ joker.calculate = function (self, card, context)
             local valid_targets = {}
 
             for _, c in ipairs(G.hand.cards) do
-                if c:get_id() ~= 7 then
+                if c:get_id() ~= 7 and not c.ability.selected_by_farmer then
                     table.insert(valid_targets, c)
                 end
             end
 
-            if #valid_targets > 0 then
+            if #valid_targets > 0 and pseudorandom(pseudoseed('farmer1')) < G.GAME.probabilities.normal / card.ability.extra.chance then
+
+                local target = pseudorandom_element(valid_targets, pseudoseed('farmer2'))
+                target.ability.selected_by_farmer = true
             
                 return {
                     extra = {focus = context.blueprint_card or card, message = 'Farmed!', func = function()
@@ -44,23 +49,19 @@ joker.calculate = function (self, card, context)
                             trigger = 'before',
                             delay = 0.0,
                             func = (function()
-                                
-                                local target = pseudorandom_element(valid_targets, pseudoseed('farmer'))
 
                                 target:flip()
                                 play_sound('card1', 1)
                                 target:juice_up(0.3, 0.3)
 
-                                delay(.15)
-
                                 local suit_prefix = string.sub(target.base.suit, 1, 1)..'_'
                                 target:set_base(G.P_CARDS[suit_prefix..'7'])
-
-                                delay(.3)
 
                                 target:flip()
                                 play_sound('tarot2', 1, 0.6)
                                 target:juice_up(0.3, 0.3)
+
+                                target.ability.selected_by_farmer = nil
                                 
 
                                 return true
