@@ -65,8 +65,10 @@ local joker_list = {
     "diplomacy",
     "rocket_surgery",
     "astrolabe",
+    "heresy",
 
     "elvis",
+    "danton",
 }
 
 local mod_path = SMODS.current_mod.path

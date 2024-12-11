@@ -1,0 +1,15 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = "if not v.boss then"
+position = "after"
+payload = '''
+elseif next(find_joker("Danton")) then
+    eligible_bosses[k] = v.boss.showdown
+'''
+match_indent = true
+times = 1

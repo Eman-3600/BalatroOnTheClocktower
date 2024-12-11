@@ -39,7 +39,8 @@
         "add_tag",
         "Tag",
         "ease_discard",
-        "ease_dollars"
+        "ease_dollars",
+        "copy_card"
     ],
     "cSpell.words": [
         "cardarea",
