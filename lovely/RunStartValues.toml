@@ -8,6 +8,7 @@ target = "game.lua"
 pattern = "self.GAME.dollars = self.GAME.starting_params.dollars"
 position = "after"
 payload = '''
+self.GAME.current_round.eman_discards = self.GAME.round_resets.discards
 self.GAME.clockmakers_taken = 0
 self.GAME.last_hand_fire = false
 for k, v in pairs(self.GAME.hands) do

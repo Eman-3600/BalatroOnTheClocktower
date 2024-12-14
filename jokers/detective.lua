@@ -3,7 +3,7 @@ local joker = {
     key = "detective",
     atlas = "atlasclockjokers",
     rarity = 1,
-    cost = 5,
+    cost = 4,
     pos = {x = 3, y = 0},
     eternal_compat = true,
     perishable_compat = true,
