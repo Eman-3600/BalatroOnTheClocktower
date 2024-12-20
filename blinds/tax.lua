@@ -16,7 +16,7 @@ local blind = {
 }
 
 blind.set_blind = function (self)
-    self.spent = nil
+    G.GAME.blind.eman_extra.spent = nil
 end
 
 -- Called directly after drawing cards from the deck to hand if the boss is enabled
@@ -29,7 +29,7 @@ blind.eman_after_draw = function (self, count)
         delay = 0.3,
         func = function ()
 
-            if self.spent then return true end
+            if G.GAME.blind.eman_extra.spent then return true end
 
             local most_played = G.GAME.current_round.most_played_poker_hand
 
@@ -59,7 +59,7 @@ blind.eman_after_draw = function (self, count)
                     delay(0.2)
                     if any_selected then G.FUNCS.discard_cards_from_highlighted() end
                 return true end }))
-                self.spent = true
+                G.GAME.blind.eman_extra.spent = true
                 delay(0.7)
             end
 

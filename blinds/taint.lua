@@ -31,7 +31,7 @@ blind.eman_after_draw = function (self, count)
 
                 local card = pseudorandom_element(G.hand.cards, pseudoseed('taint'))
 
-                self.triggered = true
+                G.GAME.blind.triggered = true
 
                 G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
                     card:juice_up(0.3, 0.3)

@@ -35,7 +35,7 @@ blind.eman_after_draw = function (self, count)
             if #non_stones > 0 then
                 local card = pseudorandom_element(non_stones, pseudoseed('brew'))
 
-                self.triggered = true
+                G.GAME.blind.triggered = true
         
                 G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
                     card:flip()

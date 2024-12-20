@@ -29,21 +29,21 @@ end
 ]]--
 
 blind.set_blind = function (self)
-    self.prepped = true
-    self.probability_change = 65356
+    G.GAME.blind.eman_extra.prepped = true
+    G.GAME.blind.eman_extra.probability_change = 65356
 
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal / self.probability_change
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal / G.GAME.blind.eman_extra.probability_change
 end
 
 blind.disable = function (self)
-    G.GAME.probabilities.normal = G.GAME.probabilities.normal * self.probability_change
+    G.GAME.probabilities.normal = G.GAME.probabilities.normal * G.GAME.blind.eman_extra.probability_change
 
-    self.probability_change = 1
+    G.GAME.blind.eman_extra.probability_change = 1
 end
 
 blind.defeat = function (self)
     if not G.GAME.blind.disabled then
-        G.GAME.probabilities.normal = G.GAME.probabilities.normal * self.probability_change
+        G.GAME.probabilities.normal = G.GAME.probabilities.normal * G.GAME.blind.eman_extra.probability_change
     end
 end
 

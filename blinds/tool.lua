@@ -8,20 +8,20 @@ local blind = {
     loc_txt = {
         name ="The Tool",
         text={
-            "Creates a card after",
-            "Play or Discard",
+            "Creates a card before",
+            "every additional draw",
         },
     },
 }
 
 blind.set_blind = function (self)
-    self.prepped = false
+    G.GAME.blind.eman_extra.prepped = false
 end
 
 blind.eman_modify_draw = function (self, hand_space)
 
-    if not self.prepped then
-        self.prepped = true
+    if not G.GAME.blind.eman_extra.prepped then
+        G.GAME.blind.eman_extra.prepped = true
         return hand_space
     end
     

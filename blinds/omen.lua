@@ -15,16 +15,16 @@ local blind = {
 }
 
 blind.set_blind = function (self)
-    self.prepped = false
+    G.GAME.blind.eman_extra.prepped = false
 end
 
 blind.press_play = function (self)
-    self.prepped = true
+    G.GAME.blind.eman_extra.prepped = true
 end
 
 blind.eman_modify_draw = function (self, hand_space)
     
-    if self.prepped then
+    if G.GAME.blind.eman_extra.prepped then
         local showdown = self.eman_get_showdown()
         G.GAME.blind:set_blind(showdown)
 

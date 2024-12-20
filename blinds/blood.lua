@@ -8,19 +8,19 @@ local blind = {
     loc_txt = {
         name ="The Blood",
         text={
-            "Destroys a card after",
-            "Play or Discard",
+            "Destroys a card in hand",
+            "before each draw",
         },
     },
 }
 
 blind.set_blind = function (self)
-    self.prepped = false
+    G.GAME.blind.eman_extra.prepped = false
 end
 
 blind.eman_modify_draw = function (self, hand_space)
-    if not self.prepped or #G.hand.cards == 0 then
-        self.prepped = true
+    if not G.GAME.blind.eman_extra.prepped or #G.hand.cards == 0 then
+        G.GAME.blind.eman_extra.prepped = true
         return hand_space
     end
 

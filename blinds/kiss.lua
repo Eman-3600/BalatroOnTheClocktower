@@ -16,11 +16,11 @@ local blind = {
 }
 
 blind.set_blind = function (self)
-    self.hands_sub = 0
+    G.GAME.blind.eman_extra.hands_sub = 0
 
     if G.GAME.round_resets.hands < 2 then
-        self.hands_sub = G.GAME.round_resets.hands - 2
-        ease_hands_played(-self.hands_sub)
+        G.GAME.blind.eman_extra.hands_sub = G.GAME.round_resets.hands - 2
+        ease_hands_played(-G.GAME.blind.eman_extra.hands_sub)
     end
 end
 

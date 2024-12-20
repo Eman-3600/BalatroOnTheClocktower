@@ -15,27 +15,27 @@ local blind = {
 }
 
 blind.set_blind = function (self)
-    self.prepped = true
-    self.hand_size_change = 5
+    G.GAME.blind.eman_extra.prepped = true
+    G.GAME.blind.eman_extra.hand_size_change = 5
 
     G.hand:change_size(5)
 end
 
 blind.disable = function (self)
-    G.hand:change_size(-self.hand_size_change)
+    G.hand:change_size(-G.GAME.blind.eman_extra.hand_size_change)
 
-    self.hand_size_change = 0
+    G.GAME.blind.eman_extra.hand_size_change = 0
 end
 
 blind.defeat = function (self)
     if not G.GAME.blind.disabled then
-        G.hand:change_size(-self.hand_size_change)
+        G.hand:change_size(-G.GAME.blind.eman_extra.hand_size_change)
     end
 end
 
 blind.eman_modify_draw = function (self, hand_space)
-    if self.prepped then
-        self.prepped = false
+    if G.GAME.blind.eman_extra.prepped then
+        G.GAME.blind.eman_extra.prepped = false
 
         return hand_space
     end

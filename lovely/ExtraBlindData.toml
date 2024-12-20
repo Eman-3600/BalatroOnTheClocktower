@@ -1,0 +1,79 @@
+[manifest]
+version = "1.0.0"
+priority = -10
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "self.triggered = blindTable.triggered"
+position = "after"
+payload = '''
+self.eman_extra = blindTable.eman_extra
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "only_hand = self.only_hand,"
+position = "after"
+payload = '''
+eman_extra = self.eman_extra,
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "only_hand = self.only_hand,"
+position = "after"
+payload = '''
+eman_extra = self.eman_extra,
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "only_hand = self.only_hand,"
+position = "after"
+payload = '''
+eman_extra = self.eman_extra,
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "self.config = {}"
+position = "after"
+payload = '''
+self.eman_extra = {}
+'''
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "blind.lua"
+pattern = "self.config.blind = blind or {}"
+position = "after"
+payload = '''
+self.eman_extra = {}
+'''
+match_indent = true
+times = 1

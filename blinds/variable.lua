@@ -23,12 +23,13 @@ end
 
 blind.loc_vars = function (self)
     return {vars = {
-        self.eman_discards or (self.config.extra * G.GAME.current_round.eman_discards)
+        (G.GAME.blind and not G.GAME.blind.eman_extra.beaten and G.GAME.blind.eman_extra.discards)
+        or (self.config.extra * G.GAME.current_round.eman_discards)
     }}
 end
 
 blind.set_blind = function (self)
-    self.eman_discards = self.config.extra * G.GAME.current_round.eman_discards
+    G.GAME.blind.eman_extra.discards = self.config.extra * G.GAME.current_round.eman_discards
 
     local i = G.GAME.current_round.eman_discards - G.GAME.current_round.discards_left
 
@@ -37,13 +38,17 @@ blind.set_blind = function (self)
     end
 end
 
+blind.defeat = function (self)
+    G.GAME.blind.eman_extra.beaten = true
+end
+
 blind.recalc_debuff = function (self, card, from_blind)
-    return card.area ~= G.jokers and self.eman_discards > 0
+    return card.area ~= G.jokers and G.GAME.blind.eman_extra.discards > 0
 end
 
 blind.eman_after_discard = function (self, forced, discarded, kept)
-    if not forced and self.eman_discards > 0 then
-        self.eman_discards = math.max(self.eman_discards - #discarded, 0)
+    if not forced and G.GAME.blind.eman_extra.discards > 0 then
+        G.GAME.blind.eman_extra.discards = math.max(G.GAME.blind.eman_extra.discards - #discarded, 0)
 
         for _, v in ipairs(G.playing_cards) do
             G.GAME.blind:debuff_card(v)
