@@ -14,7 +14,7 @@ local joker = {
         text={
             "{C:attention}Playing cards{} found in",
             "{C:attention}Standard Packs{} have an",
-            "{C:dark_edition}edition{} and {C:attention}seal{}",
+            "{C:dark_edition}edition{} and a {C:attention}seal{}",
         },
     },
 }

@@ -98,7 +98,7 @@ if not _rarity and not _legendary then
         end
     end
 
-    if G.GAME.eman_force_eternal_forgotten or (G.GAME.used_vouchers.v_baotc_history and G.GAME.eman_pool_target == G.pack_cards and pseudorandom('history') > 0.92) then
+    if G.GAME.eman_force_eternal_forgotten or (G.GAME.used_vouchers.v_baotc_history and G.GAME.eman_pool_target == G.pack_cards and pseudorandom('history') > 0.83) then
         rarity = 'baotc_forgotten'
     end
 end
