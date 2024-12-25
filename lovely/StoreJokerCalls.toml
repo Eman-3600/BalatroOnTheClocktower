@@ -131,19 +131,3 @@ G.GAME.eman_pool_target = nil
 '''
 match_indent = true
 times = 1
-
-
-
-[[patches]]
-[patches.pattern]
-target = "card.lua"
-pattern = "G.GAME.pack_choices = self.config.center.config.choose or 1"
-position = "before"
-payload = '''
-if G.GAME.used_vouchers.v_baotc_library then
-    G.GAME.pack_size = G.GAME.pack_size + 1
-    self.ability.extra = self.ability.extra + 1
-end
-'''
-match_indent = true
-times = 1

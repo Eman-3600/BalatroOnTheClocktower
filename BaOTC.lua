@@ -145,18 +145,27 @@ SMODS.Voucher {
     key = "library",
     atlas = "atlasclockextras",
     pos = {x = 0, y = 1},
-    config = {extra = 1},
+    config = {},
     loc_txt = {
         name = "Library",
         text = {
-            "{C:attention}+#1#{} Card in",
-            "all {C:attention}Booster Packs",
+            "Creates a {C:dark_edition}Negative{}",
+            "{C:baotc_forgotten}Forgotten{C:attention} Joker",
         },
     },
-    loc_vars = function (self, info_queue, card)
-        return {vars = {card.ability.extra}}
-    end,
     requires = {'v_baotc_history'},
+    redeem = function (self)
+        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+            play_sound('timpani')
+            G.GAME.eman_force_eternal_forgotten = true
+            local _card = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'history')
+            G.GAME.eman_force_eternal_forgotten = false
+            _card:set_edition({negative = true})
+            _card:add_to_deck()
+            G.jokers:emplace(_card)
+            return true end }))
+        delay(0.6)
+    end,
 }
 
 SMODS.Consumable {
