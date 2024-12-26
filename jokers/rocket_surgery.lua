@@ -10,7 +10,7 @@ local joker = {
     blueprint_compat = true,
     config = {},
     loc_txt = {
-        name ="Rocket Surgery",
+        name ="Bad Science",
         text={
             "Adds {C:money}Dollars{} to",
             "base Mult",

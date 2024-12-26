@@ -68,6 +68,8 @@ local joker_list = {
     "rocket_surgery",
     "astrolabe",
     "heresy",
+    "maintenance",
+    "negligence",
 
     "elvis",
     "danton",
