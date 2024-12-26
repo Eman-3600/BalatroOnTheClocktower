@@ -40,7 +40,9 @@
         "Tag",
         "ease_discard",
         "ease_dollars",
-        "copy_card"
+        "copy_card",
+        "update_hand_text",
+        "level_up_hand"
     ],
     "cSpell.words": [
         "cardarea",

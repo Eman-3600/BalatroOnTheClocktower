@@ -48,16 +48,16 @@ joker.calculate = function (self, card, context)
                 return true
             end}))
 
-            card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
-        
-            card_eval_status_text((card), 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}})
-        elseif context.joker_main then
-            return {
-                message = localize{type='variable',key='a_chips',vars={card.ability.extra.chips}},
-                chip_mod = card.ability.extra.chips,
-                colour = G.C.CHIPS
-            }
-        end
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_mod
+    
+        card_eval_status_text((card), 'extra', nil, nil, nil, {message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}}})
+    elseif context.joker_main then
+        return {
+            message = localize{type='variable',key='a_chips',vars={card.ability.extra.chips}},
+            chip_mod = card.ability.extra.chips,
+            colour = G.C.CHIPS
+        }
+    end
 end
 
 

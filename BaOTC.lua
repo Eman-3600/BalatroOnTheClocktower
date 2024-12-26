@@ -70,6 +70,7 @@ local joker_list = {
     "heresy",
     "maintenance",
     "negligence",
+    "enlightenment",
 
     "elvis",
     "danton",
