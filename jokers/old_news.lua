@@ -14,7 +14,7 @@ local joker = {
         text={
             "This Joker gains {C:chips}+#2#{} Chips",
             "when scored hand contains a",
-            "{C:attention}Stone{} card and a {C:attention}Pair{}",
+            "{C:attention}Stone Card{} and a {C:attention}Pair{}",
             "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
         },
     },

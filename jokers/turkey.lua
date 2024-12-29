@@ -8,13 +8,13 @@ local joker = {
     eternal_compat = false,
     perishable_compat = true,
     blueprint_compat = false,
-    config = {extra = {slots = 4, slot_mod = 1}},
+    config = {extra = {slots = 3, slot_mod = 1}},
     loc_txt = {
         name ="Turkey",
         text={
             "{C:attention}+#1#{} consumable slots",
             "{C:red}-#2#{} consumable slot",
-            "per consumable used"
+            "per round played"
         },
     },
 }
@@ -35,7 +35,7 @@ joker.remove_from_deck = function (self, card, from_debuff)
 end
 
 joker.calculate = function (self, card, context)
-    if not context.blueprint and context.consumeable then
+    if not context.blueprint and context.end_of_round and not context.individual and not context.repetition then
 
         if card.ability.extra.slots - card.ability.extra.slot_mod <= 0 then 
             G.E_MANAGER:add_event(Event({
@@ -45,12 +45,6 @@ joker.calculate = function (self, card, context)
                     card:juice_up(0.3, 0.4)
                     card.states.drag.is = true
                     card.children.center.pinch.x = true
-                    card_eval_status_text(card, 'extra', nil, nil, nil, 
-                    {
-                        message = localize('k_eaten_ex'),
-                        colour = G.C.RED
-                    }
-                    );
                     G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.3, blockable = false,
                         func = function()
                                 G.jokers:remove_card(card)
@@ -60,12 +54,16 @@ joker.calculate = function (self, card, context)
                     return true
                 end
             }))
+            return {
+                message = localize('k_eaten_ex'),
+                colour = G.C.RED
+            }
         else
             G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slot_mod
             card.ability.extra.slots = card.ability.extra.slots - card.ability.extra.slot_mod
-            G.E_MANAGER:add_event(Event({
-                func = function() card_eval_status_text(card, 'extra', nil, nil, nil, {message = card.ability.extra.slots..""}); return true
-                end}))
+            return {
+                message = card.ability.extra.slots..""
+            }
         end
     end
 end

@@ -14,7 +14,7 @@ local joker = {
         text={
             "This Joker gains {C:red}+#2#{} Mult",
             "when scored hand contains a",
-            "{C:attention}Wild{} card and not a {C:attention}Flush{}",
+            "{C:attention}Wild Card{} and not a {C:attention}Flush{}",
             "{C:inactive}(Currently {C:red}+#1#{C:inactive} Mult)",
         },
     },

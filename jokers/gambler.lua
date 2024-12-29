@@ -13,8 +13,8 @@ local joker = {
         name ="Gambler",
         text={
             "This Joker gains {X:mult,C:white} X#2# {} Mult",
-            "per {C:attention}Glass{} card scored,",
-            "resets when a {C:attention}Glass{} card breaks",
+            "per {C:attention}Glass Card{} scored,",
+            "resets when a {C:attention}Glass Card{} breaks",
             "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
         },
     },

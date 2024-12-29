@@ -12,7 +12,7 @@ local joker = {
     loc_txt = {
         name ="Love Letter",
         text={
-            "Scored {C:attention}Wild{} cards trigger",
+            "Scored {C:attention}Wild Cards{} trigger",
             "random beneficial effects",
         },
     },

@@ -181,17 +181,39 @@ SMODS.Consumable {
         name = "Shadow",
         text = {
             "Creates an {C:attention}Eternal",
-            "{C:baotc_forgotten}Forgotten{} Joker",
+            "{C:baotc_forgotten}Forgotten{} {C:attention}Joker{},",
+            "destroys all other Jokers",
         },
     },
     can_use = function (self, card)
+        for k, v in ipairs(G.jokers.cards) do
+            if not v.ability.eternal then
+                return true
+            end
+        end
+
         return #G.jokers.cards < G.jokers.config.card_limit or card.area == G.jokers
     end,
     use = function (self, card, area, copier)
 
         local used_tarot = copier or card
+        local deletable_jokers = {}
+            for k, v in pairs(G.jokers.cards) do
+                if not v.ability.eternal then deletable_jokers[#deletable_jokers + 1] = v end
+            end
+            local _first_dissolve = nil
 
-        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+        G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.2, func = function ()
+
+            for k, v in pairs(deletable_jokers) do
+                v:start_dissolve(nil, _first_dissolve)
+                _first_dissolve = true
+            end
+
+            return true
+        end}))
+
+        G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function()
             play_sound('timpani')
             G.GAME.eman_force_eternal_forgotten = true
             local _card = create_card('Joker', G.jokers, nil, nil, nil, nil, nil, 'shadow')
@@ -200,7 +222,7 @@ SMODS.Consumable {
             _card:add_to_deck()
             G.jokers:emplace(_card)
             used_tarot:juice_up(0.3, 0.5)
-            return true end }))
+        return true end }))
         delay(0.6)
     end,
 }
