@@ -28,6 +28,7 @@ local blind_list = {
     "talon",
     "trick",
     "variable",
+    "wish",
 
     "scarlet_thorn",
 }
@@ -386,9 +387,11 @@ function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, v
         delay = delay,
         func = function()
 
+            local center_key = G.GAME.blind and G.GAME.blind.eman_extra.phantom_enhancement or 'c_base'
+
             local card = create_playing_card({
                 front = pseudorandom_element(G.P_CARDS, pseudoseed('phantom')), 
-                center = G.P_CENTERS.c_base}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+                center = G.P_CENTERS[center_key]}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
             if G.GAME.blind then
                 G.GAME.blind:wiggle()
             end

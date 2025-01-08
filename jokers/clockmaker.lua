@@ -8,28 +8,21 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {extra = {chips = 35, chip_mod = 35}},
+    config = {extra = {chips = 0, chip_mod = 5}},
     loc_txt = {
         name ="Clockmaker",
         text={
-            "{C:chips}+#1#{} Chips",
+            "Gains {C:chips}+#2#{} Chips when",
+            "{C:attention}played hand{} doesn't win",
+            "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
         },
     },
 }
 
-joker.set_ability = function (self, card, initial, delay_sprites)
-    card.ability.extra.chips = card.ability.extra.chips + (card.ability.extra.chip_mod * (G.GAME and G.GAME.clockmakers_taken or 0))
-end
-
-joker.add_to_deck = function (self, card, from_debuff)
-    if not from_debuff then
-        G.GAME.clockmakers_taken = G.GAME.clockmakers_taken + 1
-    end
-end
-
 joker.loc_vars = function (self, info_queue, card)
     return {vars = {
         card.ability.extra.chips,
+        card.ability.extra.chip_mod,
     }}
 end
 
@@ -41,6 +34,12 @@ joker.calculate = function (self, card, context)
                 chip_mod = card.ability.extra.chips
             }
         end
+    elseif context.after and G.GAME.eman_chips < G.GAME.blind.chips then
+        card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
+        return {
+            message = localize{type='variable',key='a_chips',vars={card.ability.extra.chip_mod}},
+            colour = G.C.CHIPS
+        }
     end
 end
 

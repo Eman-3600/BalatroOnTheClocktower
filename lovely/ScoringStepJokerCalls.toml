@@ -27,5 +27,18 @@ for _, present_joker in ipairs(G.jokers.cards) do
     end
 end
 '''
-match_indent = false
+match_indent = true
+times = 1
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = "local effects = eval_card(G.jokers.cards[i], {cardarea = G.jokers, full_hand = G.play.cards, scoring_hand = scoring_hand, scoring_name = text, poker_hands = poker_hands, after = true})"
+position = "before"
+payload = '''
+G.GAME.eman_chips = G.GAME.chips + math.floor(hand_chips*mult)
+'''
+match_indent = true
 times = 1

@@ -36,7 +36,7 @@ joker.calculate = function (self, card, context)
 
                 for i=1, #G.hand.cards do
                     G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
-                        local enhancement = SMODS.poll_enhancement({guaranteed = true})
+                        local enhancement = SMODS.poll_enhancement({guaranteed = true, key = 'negligence'})
                         G.hand.cards[i]:set_ability(G.P_CENTERS[enhancement])
                         return true
 
