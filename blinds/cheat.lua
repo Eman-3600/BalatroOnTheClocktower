@@ -8,36 +8,51 @@ local blind = {
     loc_txt = {
         name ="The Cheat",
         text={
-            "Cards discarded previously this",
-            "ante are at the top of the deck",
+            "Cycles drawn",
+            "suits",
         },
     },
 }
 
 blind.eman_rig_shuffle = function (self, seed)
 
-    local first = {}
-    local after = {}
+    local suits = {}
+
+    for k, v in pairs(SMODS.Suits) do
+        table.insert(suits, k)
+    end
+
+    local next = {}
 
     for i = #G.deck.cards, 1, -1 do
         local card = table.remove(G.deck.cards, i)
+        card:create_suit_set()
 
-        if card.ability.discarded_this_ante then
-            table.insert(first, card)
-        else
-            table.insert(after, card)
+        table.insert(next, card)
+    end
+
+    local sorted = {}
+    local curr_suit = 0
+
+    while #next > 0 do
+        curr_suit = (curr_suit % #suits) + 1
+
+        for i = #next, 1, -1 do
+            local card = next[i]
+
+            for k, v in ipairs(card.ability.suit_set) do
+                if v == suits[curr_suit] then
+                    table.insert(sorted, table.remove(next, i))
+                    goto continue
+                end
+            end
         end
+
+        ::continue::
     end
 
-    pseudoshuffle(first, pseudoseed(seed.."_first"))
-    pseudoshuffle(after, pseudoseed(seed.."_after"))
-
-    for _, v in ipairs(after) do
-        table.insert(G.deck.cards, v)
-    end
-
-    for _, v in ipairs(first) do
-        table.insert(G.deck.cards, v)
+    for i = #sorted, 1, -1 do
+        table.insert(G.deck.cards, table.remove(sorted, i))
     end
 end
 
