@@ -9,7 +9,7 @@ local blind = {
         name ="The Scale",
         text={
             "Listed probabilities are",
-            "reduced to nearly 0",
+            "reduced by 4x",
         },
     },
 }
@@ -30,7 +30,7 @@ end
 
 blind.set_blind = function (self)
     G.GAME.blind.eman_extra.prepped = true
-    G.GAME.blind.eman_extra.probability_change = 65356
+    G.GAME.blind.eman_extra.probability_change = 4
 
     G.GAME.probabilities.normal = G.GAME.probabilities.normal / G.GAME.blind.eman_extra.probability_change
 end

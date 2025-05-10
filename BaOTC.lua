@@ -361,6 +361,10 @@ end
 
 
 
+to_big = to_big or function(x) return x end
+
+
+
 function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
 
     percent = percent or 50

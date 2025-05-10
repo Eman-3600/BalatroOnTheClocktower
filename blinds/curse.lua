@@ -14,9 +14,14 @@ local blind = {
     },
 }
 
-blind.eman_should_destroy = function (self, card, hand_chips, mult)
-    G.GAME.blind.triggered = G.GAME.chips + (hand_chips * mult) >= G.GAME.blind.chips
-    return G.GAME.blind.triggered
+blind.calculate = function (self, card, context)
+    if (context.destroy_card and context.cardarea == G.play) then
+        if (to_big(G.GAME.eman_chips) >= to_big(G.GAME.blind.chips)) then
+            return {
+                remove = true
+            }
+        end
+    end
 end
 
 
