@@ -285,17 +285,6 @@ function Blind:eman_before_play(played_hand)
 	end
 end
 
-function Blind:eman_should_destroy(card, hand_chips, mult)
-    -- Called when checking which cards should be destroyed
-
-    if not self.disabled then
-		local obj = self.config.blind
-		if obj.eman_should_destroy and type(obj.eman_should_destroy) == "function" then
-			return obj:eman_should_destroy(card, hand_chips, mult)
-		end
-	end
-end
-
 function Blind:eman_should_draw_phantom()
     -- Called when drawing a card; returns whether or not the drawn card should be a phantom
 

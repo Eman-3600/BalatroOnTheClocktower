@@ -118,15 +118,18 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = "if scoring_hand[i].ability.name == 'Glass Card' and not scoring_hand[i].debuff and pseudorandom('glass') < G.GAME.probabilities.normal/scoring_hand[i].ability.extra then"
+pattern = "if cards_destroyed[1] then"
 position = "before"
 payload = '''
 
-if G.GAME.blind and G.GAME.blind:eman_should_destroy(scoring_hand[i], hand_chips, mult) then
-    destroyed = true
+for i=1, #scoring_hand do
+
+    if G.GAME.blind and G.GAME.blind:eman_should_destroy(scoring_hand[i], hand_chips, mult) then
+        table.insert(cards_destroyed, scoring_hand[i])
+    end
 end
 '''
-match_indent = true
+match_indent = false
 times = 1
 
 

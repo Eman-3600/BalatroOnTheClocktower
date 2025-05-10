@@ -28,8 +28,14 @@ blind.eman_before_play = function (self, played_hand)
     end
 end
 
-blind.eman_should_destroy = function (self, card, hand_chips, mult)
-    return card.ability.condemned
+blind.calculate = function (self, card, context)
+    if (context.destroy_card and context.cardarea == G.play) then
+        if (context.destroy_card.ability.condemned) then
+            return {
+                remove = true
+            }
+        end
+    end
 end
 
 blind.defeat = function (self)

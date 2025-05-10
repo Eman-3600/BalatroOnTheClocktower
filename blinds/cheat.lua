@@ -22,6 +22,8 @@ blind.eman_rig_shuffle = function (self, seed)
         table.insert(suits, k)
     end
 
+    table.insert(suits, "_")
+
     local next = {}
 
     for i = #G.deck.cards, 1, -1 do
@@ -46,6 +48,10 @@ blind.eman_rig_shuffle = function (self, seed)
                     goto continue
                 end
             end
+        end
+
+        for i = #next, 1, -1 do
+            table.insert(sorted, table.remove(next, i))
         end
 
         ::continue::
