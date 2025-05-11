@@ -8,7 +8,7 @@ local joker = {
     eternal_compat = false,
     perishable_compat = true,
     blueprint_compat = false,
-    config = {extra = {slots = 3, slot_mod = 1}},
+    config = {extra = {slots = 5, slot_mod = 1}},
     loc_txt = {
         name ="Turkey",
         text={

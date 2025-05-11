@@ -40,7 +40,7 @@ local joker_list = {
     "monk",
     "turkey",
     "detective",
-    "washerwoman",
+    "washer",
     "gravedigger",
     "raven",
     "mayor",
