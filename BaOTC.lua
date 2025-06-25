@@ -363,7 +363,34 @@ end
 
 to_big = to_big or function(x) return x end
 
+temp_calc = SMODS.calculate_individual_effect
+SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
 
+    local effect_count = 0
+
+    if (key == 'chips' or key == 'h_chips' or key == 'chip_mod') and amount then
+        effect_count = effect_count + 1
+    end
+    if (key == 'mult' or key == 'h_mult' or key == 'mult_mod') and amount then
+        effect_count = effect_count + 1
+    end
+    if (key == 'x_chips' or key == 'xchips' or key == 'Xchip_mod') and amount ~= 1 then
+        effect_count = effect_count + 1
+    end
+    if (key == 'x_mult' or key == 'xmult' or key == 'Xmult' or key == 'x_mult_mod' or key == 'Xmult_mod') and amount ~= 1 then
+        effect_count = effect_count + 1
+    end
+    if (key == 'swap') then
+        effect_count = effect_count + 1
+    end
+    if (key == 'balance') then
+        effect_count = effect_count + 1
+    end
+
+    G.GAME.current_round.meta_scoring_effects = G.GAME.current_round.meta_scoring_effects + effect_count
+
+    return temp_calc(effect, scored_card, key, amount, from_edition)
+end
 
 function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
 

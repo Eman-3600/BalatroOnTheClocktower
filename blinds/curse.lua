@@ -16,7 +16,7 @@ local blind = {
 
 blind.calculate = function (self, card, context)
     if (context.destroy_card and context.cardarea == G.play) then
-        if (to_big(G.GAME.eman_chips) >= to_big(G.GAME.blind.chips)) then
+        if (to_big(G.GAME.chips + hand_chips * mult) >= to_big(G.GAME.blind.chips)) then
             return {
                 remove = true
             }

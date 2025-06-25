@@ -216,7 +216,6 @@ pattern = "v.ability.played_this_ante = nil"
 position = "after"
 payload = '''
 v.ability.discarded_this_ante = nil
-v.ability.triggered_this_ante = nil
 '''
 match_indent = true
 times = 1

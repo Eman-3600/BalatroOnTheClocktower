@@ -34,7 +34,7 @@ joker.calculate = function (self, card, context)
                 chip_mod = card.ability.extra.chips
             }
         end
-    elseif context.after and G.GAME.eman_chips < G.GAME.blind.chips then
+    elseif context.after and to_big(G.GAME.chips + hand_chips * mult) < to_big(G.GAME.blind.chips) then
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chip_mod
         return {
             message = localize{type='variable',key='a_chips',vars={card.ability.extra.chip_mod}},
