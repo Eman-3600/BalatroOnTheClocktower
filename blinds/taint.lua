@@ -14,40 +14,39 @@ local blind = {
     },
 }
 
-blind.eman_after_draw = function (self, count)
+blind.calculate = function (self, card, context)
+    if context.hand_drawn then
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function ()
 
-    G.E_MANAGER:add_event(Event({
-        trigger = 'after',
-        delay = 0.2,
-        func = function ()
-
-            for _, v in ipairs(G.hand.cards) do
-                if v.debuff then
-                    return true
-                end
-            end
-
-            if #G.hand.cards > 0 then
-
-                local card = pseudorandom_element(G.hand.cards, pseudoseed('taint'))
-
-                G.GAME.blind.triggered = true
-
-                G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
-                    card:juice_up(0.3, 0.3)
-                    play_sound('tarot2', 1, 0.6)
-                    G.GAME.blind:wiggle()
-                    card:set_debuff(true)
-                    return true
+                for _, v in ipairs(G.hand.cards) do
+                    if v.debuff then
+                        return true
                     end
-                }))
+                end
+
+                if #G.hand.cards > 0 then
+
+                    local card = pseudorandom_element(G.hand.cards, pseudoseed('taint'))
+
+                    G.GAME.blind.triggered = true
+
+                    G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
+                        card:juice_up(0.3, 0.3)
+                        play_sound('tarot2', 1, 0.6)
+                        G.GAME.blind:wiggle()
+                        card:set_debuff(true)
+                        return true
+                        end
+                    }))
+                end
+
+                return true
             end
-
-            return true
-        end
-    }))
-
-
+        }))
+    end
 end
 
 blind.recalc_debuff = function (self, card, from_blind)

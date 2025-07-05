@@ -72,30 +72,6 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = '''
-for i=1, hand_space do --draw cards from deckL
-    if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
-        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-    else
-        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-    end
-end
-'''
-position = "after"
-payload = '''
-
-if G.GAME.blind and hand_space > 0 then
-    G.GAME.blind:eman_after_draw(hand_space)
-end
-'''
-match_indent = true
-times = 1
-
-
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
 pattern = "for i=1, #G.hand.highlighted do"
 position = "before"
 payload = '''

@@ -250,17 +250,6 @@ function Blind:eman_after_discard(forced, discarded, kept)
 	end
 end
 
-function Blind:eman_after_draw(draw_count)
-    -- Called after the player draws cards
-
-    if not self.disabled then
-		local obj = self.config.blind
-		if obj.eman_after_draw and type(obj.eman_after_draw) == "function" then
-			return obj:eman_after_draw(draw_count)
-		end
-	end
-end
-
 function Blind:eman_modify_draw(hand_space)
     -- Called before the player draws cards; returns new hand space
 
