@@ -41,7 +41,10 @@
         "ease_dollars",
         "copy_card",
         "update_hand_text",
-        "level_up_hand"
+        "level_up_hand",
+        "hand_chips",
+        "mult",
+        "juice_card_until"
     ],
     "cSpell.words": [
         "cardarea",
