@@ -63,6 +63,7 @@ local joker_list = {
     "shield",
     "ace_of_fours",
     "pacifist",
+    "noble",
 
     "isolation",
     "quicksilver",
@@ -106,12 +107,66 @@ SMODS.Atlas{
     py = 95,
 }
 
+-- All the Suit Atlases
+SMODS.Atlas({
+	key = "atlasclocksuits_ui",
+	path = "ClockSuits_UI.png",
+	px = 18,
+	py = 18,
+})
+
+SMODS.Atlas({
+	key = "atlasclocksuits2_ui",
+	path = "ClockSuits_HC_UI.png",
+	px = 18,
+	py = 18,
+})
+
+SMODS.Atlas({
+	key = "atlasclocksuits",
+	path = "ClockSuits.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
+	key = "atlasclocksuits2",
+	path = "ClockSuits_HC.png",
+	px = 71,
+	py = 95,
+})
+
 SMODS.Rarity{
     key = "forgotten",
     loc_txt = {
         name ="Forgotten",
     },
     badge_colour = HEX('630c2b'),
+}
+
+SMODS.Suit {
+	key = 'lamps',
+	card_key = 'LAMPS',
+
+	lc_atlas = 'atlasclocksuits',
+	lc_ui_atlas = 'atlasclocksuits_ui',
+	lc_colour = HEX("58147d"),
+
+	hc_atlas = 'atlasclocksuits2',
+	hc_ui_atlas = 'atlasclocksuits2_ui',
+	hc_colour = HEX("58147d"),
+
+	pos = { y = 0 },
+	ui_pos = { x = 0, y = 0 },
+
+	loc_txt = {
+        singular = "Lamp",
+        plural = "Lamps"
+    },
+
+	in_pool = function(self, args)
+		return not (args and args.initial_deck)
+	end
 }
 
 SMODS.Edition {
