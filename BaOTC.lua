@@ -165,7 +165,7 @@ SMODS.Suit {
     },
 
 	in_pool = function(self, args)
-		return not (args and args.initial_deck)
+		return G.GAME and G.GAME.eman_lamps_enabled
 	end
 }
 
