@@ -138,38 +138,6 @@ times = 1
 
 [[patches]]
 [patches.pattern]
-target = "cardarea.lua"
-pattern = "if area == G.discard then"
-position = "before"
-payload = '''
-if self == G.deck and card.edition and card.edition.baotc_phantom then
-    card:start_dissolve()
-    return false
-end
-'''
-match_indent = true
-times = 1
-
-
-
-[[patches]]
-[patches.pattern]
-target = "common_events.lua"
-pattern = "to:emplace(card, nil, stay_flipped)"
-position = "before"
-payload = '''
-if to == G.deck and card and card.edition and card.edition.baotc_phantom then
-    card:start_dissolve()
-    return true
-end
-'''
-match_indent = true
-times = 1
-
-
-
-[[patches]]
-[patches.pattern]
 target = "functions/state_events.lua"
 pattern = "v.ability.played_this_ante = nil"
 position = "after"

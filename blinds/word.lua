@@ -9,7 +9,7 @@ local blind = {
         name ="The Word",
         text={
             "#1# in 2 played",
-            "cards become lamps",
+            "cards become jinxes",
         },
     },
 }
@@ -28,10 +28,10 @@ blind.calculate = function (self, card, context)
     if context.before then
         for k, v in ipairs(context.scoring_hand) do
             if (pseudorandom(pseudoseed('word')) < G.GAME.probabilities.normal/2) then
-                G.GAME.eman_lamps_enabled = true
+                G.GAME.eman_jinxes_enabled = true
                 G.E_MANAGER:add_event(Event({
                     func = function()
-                        SMODS.change_base(v, 'baotc_lamps', nil)
+                        SMODS.change_base(v, 'baotc_jinxes', nil)
                         v:juice_up()
                         return true
                     end

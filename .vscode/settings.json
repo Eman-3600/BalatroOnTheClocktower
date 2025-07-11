@@ -50,6 +50,7 @@
         "cardarea",
         "consumeable",
         "consumeables",
-        "mult"
+        "mult",
+        "SMODS"
     ]
 }

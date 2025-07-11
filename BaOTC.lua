@@ -1,6 +1,13 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
+SMODS.current_mod.optional_features = {
+	cardareas = {
+		deck = true,
+		discard = true
+	}
+}
+
 -- list of all blinds
 local blind_list = {
     "lie",
@@ -145,8 +152,8 @@ SMODS.Rarity{
 }
 
 SMODS.Suit {
-	key = 'lamps',
-	card_key = 'LAMPS',
+	key = 'jinxes',
+	card_key = 'JINXES',
 
 	lc_atlas = 'atlasclocksuits',
 	lc_ui_atlas = 'atlasclocksuits_ui',
@@ -160,23 +167,26 @@ SMODS.Suit {
 	ui_pos = { x = 0, y = 0 },
 
 	loc_txt = {
-        singular = "Lamp",
-        plural = "Lamps"
+        singular = "Jinx",
+        plural = "Jinxes"
     },
 
 	in_pool = function(self, args)
-		return G.GAME and G.GAME.eman_lamps_enabled
+		return G.GAME and G.GAME.eman_jinxes_enabled
 	end
 }
 
 SMODS.Edition {
     key = "phantom",
-    shader = false,
+    shader = 'booster',
     disable_shadow = true,
     disable_base_shader = false,
 
     discovered = true,
     config = {},
+    prefix_config = {
+        shader = false
+    },
 
     loc_txt = {
         name = "Phantom",
@@ -186,6 +196,31 @@ SMODS.Edition {
             "current blind ends",
         },
     },
+
+    in_shop = false,
+    weight = 0,
+    get_weight = function(self)
+        return 0
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and not card.ability.getting_destroyed then
+            card.ability.getting_destroyed = true
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.2,
+                blockable = false,
+                func = function()
+                    card:start_dissolve()
+                    return true
+                end
+            }))
+        end
+    end,
+    
+    in_pool = function(self, args)
+        return false
+    end,
 }
 
 SMODS.Voucher {
