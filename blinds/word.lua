@@ -26,7 +26,7 @@ end
 
 blind.calculate = function (self, card, context)
     if context.before then
-        for k, v in ipairs(context.scoring_hand) do
+        for k, v in ipairs(context.full_hand) do
             if (pseudorandom(pseudoseed('word')) < G.GAME.probabilities.normal/2) then
                 G.GAME.eman_jinxes_enabled = true
                 G.E_MANAGER:add_event(Event({

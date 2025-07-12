@@ -42,8 +42,7 @@ end
 
 blind.collection_loc_vars = function (self)
 
-    self.vars = {"50% of"}
-    return self.vars
+    return { vars = {"50% of"}}
 end
 
 return blind
