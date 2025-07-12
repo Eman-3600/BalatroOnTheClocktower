@@ -161,7 +161,7 @@ SMODS.Suit {
 
 	hc_atlas = 'atlasclocksuits2',
 	hc_ui_atlas = 'atlasclocksuits2_ui',
-	hc_colour = HEX("58147d"),
+	hc_colour = HEX("7d10a0"),
 
 	pos = { y = 0 },
 	ui_pos = { x = 0, y = 0 },
