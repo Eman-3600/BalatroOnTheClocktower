@@ -320,6 +320,62 @@ SMODS.Consumable {
     end,
 }
 
+SMODS.Consumable {
+    key = "enspell",
+    set = 'Spectral',
+    atlas = "atlasclockextras",
+    pos = {x = 2, y = 0},
+    config = {},
+    loc_txt = {
+        name = "Enspell",
+        text = {
+            "Converts {C:attention}1{} card",
+            "of each {C:attention}rank{}",
+            "to #1#",
+        },
+    },
+    loc_vars = function (self)
+
+        return { vars = {localize('baotc_jinxes','suits_plural'), colours = {G.C.SUITS['baotc_jinxes']}}}
+    end,
+    can_use = function (self, card)
+        return true
+    end,
+    use = function (self, card, area, copier)
+
+        local used_tarot = copier or card
+
+        for i=14,2,-1 do
+
+            local cards = {}
+
+            for _, v in ipairs(G.deck.cards) do
+                if (v:get_id() == i) then
+                    table.insert(cards, v)
+                end
+            end
+
+            if #cards > 0 then
+                G.GAME.eman_jinxes_enabled = true
+                G.E_MANAGER:add_event(Event({func = function()
+                    local playing_card = pseudorandom_element(cards, pseudoseed('enspell'))
+
+                    SMODS.change_base(playing_card, 'baotc_jinxes', nil)
+                    if (playing_card.area == G.hand) then
+                        playing_card:juice_up()
+                    end
+                return true end }))
+            end
+        end
+
+        delay(0.6)
+    end,
+    in_pool = function (self)
+
+        return not G.GAME.eman_jinxes_enabled
+    end,
+}
+
 -- pattern basically taken from Cryptid
 function Blind:eman_before_discard(forced, discarded, kept)
     -- Called directly when the player discards cards
