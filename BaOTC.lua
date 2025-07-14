@@ -87,6 +87,10 @@ local joker_list = {
     "danton",
 }
 
+local deck_list = {
+    "occult",
+}
+
 local mod_path = SMODS.current_mod.path
 SMODS.Atlas{
     object_type = "atlas",
@@ -143,6 +147,14 @@ SMODS.Atlas({
 	py = 95,
 })
 
+SMODS.Atlas{
+    object_type = "atlas",
+    key = "atlasclockdecks",
+    path = "ClockDecks.png",
+    px = 71,
+    py = 95,
+}
+
 SMODS.Rarity{
     key = "forgotten",
     loc_txt = {
@@ -172,7 +184,7 @@ SMODS.Suit {
     },
 
 	in_pool = function(self, args)
-		return G.GAME and G.GAME.eman_jinxes_enabled
+		return G.GAME and (G.GAME.eman_jinxes_enabled or (G.GAME.selected_back and G.GAME.selected_back.effect.extra and G.GAME.selected_back.effect.extra.eman_jinxes_enabled))
 	end
 }
 
@@ -491,6 +503,26 @@ for k, v in ipairs(joker_list) do
         for k_, v_ in pairs(joker) do
             if type(v_) == 'function' then
                 joker_obj[k_] = joker[k_]
+            end
+        end
+    end
+end
+
+for k, v in ipairs(deck_list) do
+    local deck = NFS.load(mod_path .. "decks/" .. v .. ".lua")()
+
+    -- load if present
+    if not deck then
+        sendErrorMessage("[BAOTC] Cannot find deck with shorthand: " .. v)
+    else
+        deck.key = v
+        deck.discovered = false
+
+        local deck_obj = SMODS.Back(deck)
+
+        for k_, v_ in pairs(deck) do
+            if type(v_) == 'function' then
+                deck_obj[k_] = deck[k_]
             end
         end
     end
