@@ -1,6 +1,13 @@
 ----------------------------------------------
 ------------MOD CODE -------------------------
 
+SMODS.current_mod.optional_features = {
+	cardareas = {
+		deck = true,
+		discard = true
+	}
+}
+
 -- list of all blinds
 local blind_list = {
     "lie",
@@ -63,6 +70,7 @@ local joker_list = {
     "shield",
     "ace_of_fours",
     "pacifist",
+    "noble",
 
     "isolation",
     "quicksilver",
@@ -77,6 +85,11 @@ local joker_list = {
 
     "elvis",
     "danton",
+}
+
+local deck_list = {
+    "devilish",
+    "occult",
 }
 
 local mod_path = SMODS.current_mod.path
@@ -106,6 +119,43 @@ SMODS.Atlas{
     py = 95,
 }
 
+-- All the Suit Atlases
+SMODS.Atlas({
+	key = "atlasclocksuits_ui",
+	path = "ClockSuits_UI.png",
+	px = 18,
+	py = 18,
+})
+
+SMODS.Atlas({
+	key = "atlasclocksuits2_ui",
+	path = "ClockSuits_HC_UI.png",
+	px = 18,
+	py = 18,
+})
+
+SMODS.Atlas({
+	key = "atlasclocksuits",
+	path = "ClockSuits.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas({
+	key = "atlasclocksuits2",
+	path = "ClockSuits_HC.png",
+	px = 71,
+	py = 95,
+})
+
+SMODS.Atlas{
+    object_type = "atlas",
+    key = "atlasclockdecks",
+    path = "ClockDecks.png",
+    px = 71,
+    py = 95,
+}
+
 SMODS.Rarity{
     key = "forgotten",
     loc_txt = {
@@ -114,14 +164,42 @@ SMODS.Rarity{
     badge_colour = HEX('630c2b'),
 }
 
+SMODS.Suit {
+	key = 'jinxes',
+	card_key = 'JINXES',
+
+	lc_atlas = 'atlasclocksuits',
+	lc_ui_atlas = 'atlasclocksuits_ui',
+	lc_colour = HEX("58147d"),
+
+	hc_atlas = 'atlasclocksuits2',
+	hc_ui_atlas = 'atlasclocksuits2_ui',
+	hc_colour = HEX("7d10a0"),
+
+	pos = { y = 0 },
+	ui_pos = { x = 0, y = 0 },
+
+	loc_txt = {
+        singular = "Jinx",
+        plural = "Jinxes"
+    },
+
+	in_pool = function(self, args)
+		return G.GAME and (G.GAME.eman_jinxes_enabled or (G.GAME.selected_back and G.GAME.selected_back.effect.extra and G.GAME.selected_back.effect.extra.eman_jinxes_enabled))
+	end
+}
+
 SMODS.Edition {
     key = "phantom",
-    shader = false,
+    shader = 'booster',
     disable_shadow = true,
     disable_base_shader = false,
 
     discovered = true,
     config = {},
+    prefix_config = {
+        shader = false
+    },
 
     loc_txt = {
         name = "Phantom",
@@ -131,6 +209,31 @@ SMODS.Edition {
             "current blind ends",
         },
     },
+
+    in_shop = false,
+    weight = 0,
+    get_weight = function(self)
+        return 0
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and not card.ability.getting_destroyed then
+            card.ability.getting_destroyed = true
+            G.E_MANAGER:add_event(Event({
+                trigger = 'after',
+                delay = 0.2,
+                blockable = false,
+                func = function()
+                    card:start_dissolve()
+                    return true
+                end
+            }))
+        end
+    end,
+    
+    in_pool = function(self, args)
+        return false
+    end,
 }
 
 SMODS.Voucher {
@@ -229,6 +332,62 @@ SMODS.Consumable {
         delay(0.6)
     end,
 }
+
+-- SMODS.Consumable {
+--     key = "enspell",
+--     set = 'Spectral',
+--     atlas = "atlasclockextras",
+--     pos = {x = 2, y = 0},
+--     config = {},
+--     loc_txt = {
+--         name = "Enspell",
+--         text = {
+--             "Converts {C:attention}1{} card",
+--             "of each {C:attention}rank{}",
+--             "to #1#",
+--         },
+--     },
+--     loc_vars = function (self)
+
+--         return { vars = {localize('baotc_jinxes','suits_plural'), colours = {G.C.SUITS['baotc_jinxes']}}}
+--     end,
+--     can_use = function (self, card)
+--         return true
+--     end,
+--     use = function (self, card, area, copier)
+
+--         local used_tarot = copier or card
+
+--         for i=14,2,-1 do
+
+--             local cards = {}
+
+--             for _, v in ipairs(G.deck.cards) do
+--                 if (v:get_id() == i) then
+--                     table.insert(cards, v)
+--                 end
+--             end
+
+--             if #cards > 0 then
+--                 G.GAME.eman_jinxes_enabled = true
+--                 G.E_MANAGER:add_event(Event({func = function()
+--                     local playing_card = pseudorandom_element(cards, pseudoseed('enspell'))
+
+--                     SMODS.change_base(playing_card, 'baotc_jinxes', nil)
+--                     if (playing_card.area == G.hand) then
+--                         playing_card:juice_up()
+--                     end
+--                 return true end }))
+--             end
+--         end
+
+--         delay(0.6)
+--     end,
+--     in_pool = function (self)
+
+--         return not G.GAME.eman_jinxes_enabled
+--     end,
+-- }
 
 -- pattern basically taken from Cryptid
 function Blind:eman_before_discard(forced, discarded, kept)
@@ -350,6 +509,26 @@ for k, v in ipairs(joker_list) do
     end
 end
 
+for k, v in ipairs(deck_list) do
+    local deck = NFS.load(mod_path .. "decks/" .. v .. ".lua")()
+
+    -- load if present
+    if not deck then
+        sendErrorMessage("[BAOTC] Cannot find deck with shorthand: " .. v)
+    else
+        deck.key = v
+        deck.discovered = false
+
+        local deck_obj = SMODS.Back(deck)
+
+        for k_, v_ in pairs(deck) do
+            if type(v_) == 'function' then
+                deck_obj[k_] = deck[k_]
+            end
+        end
+    end
+end
+
 
 
 to_big = to_big or function(x) return x end
@@ -407,6 +586,52 @@ function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, v
                 G.GAME.blind:wiggle()
             end
             card:set_edition("e_baotc_phantom", true, true)
+
+            
+            card = G.deck:remove_card(card)
+            if card then drawn = true end
+            local stay_flipped = G.GAME and G.GAME.blind and G.GAME.blind:stay_flipped(G.hand, card)
+            if G.GAME.modifiers.flipped_cards then
+                if pseudorandom(pseudoseed('flipped_card')) < 1/G.GAME.modifiers.flipped_cards then
+                    stay_flipped = true
+                end
+            end
+            G.hand:emplace(card, nil, stay_flipped)
+
+            if not mute and drawn then
+                G.VIBRATION = G.VIBRATION + 0.6
+                play_sound('card1', 0.85 + percent*0.2/100, 0.6*(vol or 1))
+            end
+            if sort then
+                G.hand:sort()
+            end
+            return true
+        end
+      }))
+end
+
+function eman_draw_phantom_clone(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
+
+    percent = percent or 50
+    delay = delay or 0.1 
+    if dir == 'down' then 
+        percent = 1-percent
+    end
+    sort = sort or false
+    local drawn = nil
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'before',
+        delay = delay,
+        func = function()
+
+            local center_key = G.GAME.blind and G.GAME.blind.eman_extra.phantom_enhancement or 'c_base'
+
+            local card = create_playing_card({
+                front = pseudorandom_element(G.P_CARDS, pseudoseed('phantom')), 
+                center = G.P_CENTERS[center_key]}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+            card:set_edition("e_baotc_phantom", true, true)
+            copy_card(G.GAME.current_round.eman_last_draw, card, nil, nil, true)
 
             
             card = G.deck:remove_card(card)

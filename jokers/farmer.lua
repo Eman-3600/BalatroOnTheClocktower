@@ -54,8 +54,7 @@ joker.calculate = function (self, card, context)
                                 play_sound('card1', 1)
                                 target:juice_up(0.3, 0.3)
 
-                                local suit_prefix = string.sub(target.base.suit, 1, 1)..'_'
-                                target:set_base(G.P_CARDS[suit_prefix..'7'])
+                                SMODS.change_base(target, nil, '7')
 
                                 target:flip()
                                 play_sound('tarot2', 1, 0.6)

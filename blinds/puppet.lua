@@ -21,8 +21,7 @@ end
 
 blind.collection_loc_vars = function (self)
 
-    self.vars = {"1"}
-    return self.vars
+    return { vars = {""..(G.GAME and G.GAME.probabilities.normal or 1)}}
 end
 
 blind.eman_should_draw_phantom = function (self)

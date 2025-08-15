@@ -47,29 +47,17 @@ for _, present_joker in ipairs(G.jokers.cards) do
     end
 end
 
-local drawn_card
-
 if rigged_draw then
     draw_card(G.deck,G.hand, i*100/hand_space,'up', true, rigged_draw.card)
+    G.GAME.current_round.eman_last_draw = rigged_draw.card
     card_eval_status_text(rigged_draw.joker, 'extra', nil, nil, nil, rigged_draw.eval)
-else
-    draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-end
-'''
-match_indent = true
-times = 2
-
-
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
-pattern = "draw_card(G.deck,G.hand, i*100/hand_space,'up', true)"
-position = "at"
-payload = '''
-if G.GAME.blind and G.GAME.blind:eman_should_draw_phantom() then
+elseif (G.GAME.current_round.eman_clones or 0) > 0 and G.GAME.current_round.eman_last_draw then
+    G.GAME.current_round.eman_clones = G.GAME.current_round.eman_clones - 1
+    eman_draw_phantom_clone(i*100/hand_space,'up', true)
+elseif G.GAME.blind and G.GAME.blind:eman_should_draw_phantom() then
     eman_draw_phantom_card(i*100/hand_space,'up', true)
 else
+    G.GAME.current_round.eman_last_draw = G.deck.cards[#G.deck.cards]
     draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
 end
 '''
