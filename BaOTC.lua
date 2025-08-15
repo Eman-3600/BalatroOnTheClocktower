@@ -88,6 +88,7 @@ local joker_list = {
 }
 
 local deck_list = {
+    "devilish",
     "occult",
 }
 
@@ -332,61 +333,61 @@ SMODS.Consumable {
     end,
 }
 
-SMODS.Consumable {
-    key = "enspell",
-    set = 'Spectral',
-    atlas = "atlasclockextras",
-    pos = {x = 2, y = 0},
-    config = {},
-    loc_txt = {
-        name = "Enspell",
-        text = {
-            "Converts {C:attention}1{} card",
-            "of each {C:attention}rank{}",
-            "to #1#",
-        },
-    },
-    loc_vars = function (self)
+-- SMODS.Consumable {
+--     key = "enspell",
+--     set = 'Spectral',
+--     atlas = "atlasclockextras",
+--     pos = {x = 2, y = 0},
+--     config = {},
+--     loc_txt = {
+--         name = "Enspell",
+--         text = {
+--             "Converts {C:attention}1{} card",
+--             "of each {C:attention}rank{}",
+--             "to #1#",
+--         },
+--     },
+--     loc_vars = function (self)
 
-        return { vars = {localize('baotc_jinxes','suits_plural'), colours = {G.C.SUITS['baotc_jinxes']}}}
-    end,
-    can_use = function (self, card)
-        return true
-    end,
-    use = function (self, card, area, copier)
+--         return { vars = {localize('baotc_jinxes','suits_plural'), colours = {G.C.SUITS['baotc_jinxes']}}}
+--     end,
+--     can_use = function (self, card)
+--         return true
+--     end,
+--     use = function (self, card, area, copier)
 
-        local used_tarot = copier or card
+--         local used_tarot = copier or card
 
-        for i=14,2,-1 do
+--         for i=14,2,-1 do
 
-            local cards = {}
+--             local cards = {}
 
-            for _, v in ipairs(G.deck.cards) do
-                if (v:get_id() == i) then
-                    table.insert(cards, v)
-                end
-            end
+--             for _, v in ipairs(G.deck.cards) do
+--                 if (v:get_id() == i) then
+--                     table.insert(cards, v)
+--                 end
+--             end
 
-            if #cards > 0 then
-                G.GAME.eman_jinxes_enabled = true
-                G.E_MANAGER:add_event(Event({func = function()
-                    local playing_card = pseudorandom_element(cards, pseudoseed('enspell'))
+--             if #cards > 0 then
+--                 G.GAME.eman_jinxes_enabled = true
+--                 G.E_MANAGER:add_event(Event({func = function()
+--                     local playing_card = pseudorandom_element(cards, pseudoseed('enspell'))
 
-                    SMODS.change_base(playing_card, 'baotc_jinxes', nil)
-                    if (playing_card.area == G.hand) then
-                        playing_card:juice_up()
-                    end
-                return true end }))
-            end
-        end
+--                     SMODS.change_base(playing_card, 'baotc_jinxes', nil)
+--                     if (playing_card.area == G.hand) then
+--                         playing_card:juice_up()
+--                     end
+--                 return true end }))
+--             end
+--         end
 
-        delay(0.6)
-    end,
-    in_pool = function (self)
+--         delay(0.6)
+--     end,
+--     in_pool = function (self)
 
-        return not G.GAME.eman_jinxes_enabled
-    end,
-}
+--         return not G.GAME.eman_jinxes_enabled
+--     end,
+-- }
 
 -- pattern basically taken from Cryptid
 function Blind:eman_before_discard(forced, discarded, kept)
@@ -585,6 +586,52 @@ function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, v
                 G.GAME.blind:wiggle()
             end
             card:set_edition("e_baotc_phantom", true, true)
+
+            
+            card = G.deck:remove_card(card)
+            if card then drawn = true end
+            local stay_flipped = G.GAME and G.GAME.blind and G.GAME.blind:stay_flipped(G.hand, card)
+            if G.GAME.modifiers.flipped_cards then
+                if pseudorandom(pseudoseed('flipped_card')) < 1/G.GAME.modifiers.flipped_cards then
+                    stay_flipped = true
+                end
+            end
+            G.hand:emplace(card, nil, stay_flipped)
+
+            if not mute and drawn then
+                G.VIBRATION = G.VIBRATION + 0.6
+                play_sound('card1', 0.85 + percent*0.2/100, 0.6*(vol or 1))
+            end
+            if sort then
+                G.hand:sort()
+            end
+            return true
+        end
+      }))
+end
+
+function eman_draw_phantom_clone(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
+
+    percent = percent or 50
+    delay = delay or 0.1 
+    if dir == 'down' then 
+        percent = 1-percent
+    end
+    sort = sort or false
+    local drawn = nil
+
+    G.E_MANAGER:add_event(Event({
+        trigger = 'before',
+        delay = delay,
+        func = function()
+
+            local center_key = G.GAME.blind and G.GAME.blind.eman_extra.phantom_enhancement or 'c_base'
+
+            local card = create_playing_card({
+                front = pseudorandom_element(G.P_CARDS, pseudoseed('phantom')), 
+                center = G.P_CENTERS[center_key]}, G.deck, nil, nil, {G.C.SECONDARY_SET.Enhanced})
+            card:set_edition("e_baotc_phantom", true, true)
+            copy_card(G.GAME.current_round.eman_last_draw, card, nil, nil, true)
 
             
             card = G.deck:remove_card(card)
