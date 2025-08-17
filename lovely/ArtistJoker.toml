@@ -8,7 +8,7 @@ target = "functions/state_events.lua"
 pattern = "check_and_set_high_score('hand', hand_chips*mult)"
 position = "after"
 payload = '''
-G.GAME.last_hand_fire = (hand_chips*mult >= G.GAME.blind.chips)
+G.GAME.last_hand_fire = (to_big(hand_chips*mult) >= to_big(G.GAME.blind.chips))
 '''
 match_indent = false
 times = 1

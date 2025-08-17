@@ -57,7 +57,7 @@ joker.calculate = function (self, card, context)
             return {
                 message = localize('k_plus_spectral'),
                 colour = G.C.SECONDARY_SET.Spectral,
-                card = self
+                card = card
             }
         end
     elseif context.end_of_round and not context.individual and not context.repetition and not context.blueprint then

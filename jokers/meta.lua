@@ -19,44 +19,44 @@ local joker = {
     },
 }
 
-function eman_evaluate_meta(effects)
+-- function eman_evaluate_meta(effects)
 
-    local effect_count = 0
+--     local effect_count = 0
 
-    if effects.Xmult_mod then
-        effect_count = effect_count + 1
-    end
-    if effects.x_mult then
-        effect_count = effect_count + 1
-    end
-    if effects.x_mult_mod then
-        effect_count = effect_count + 1
-    end
-    if effects.mult_mod then
-        effect_count = effect_count + 1
-    end
-    if effects.mult then
-        effect_count = effect_count + 1
-    end
-    if effects.h_mult then
-        effect_count = effect_count + 1
-    end
-    if effects.chip_mod then
-        effect_count = effect_count + 1
-    end
-    if effects.chips then
-        effect_count = effect_count + 1
-    end
+--     if effects.Xmult_mod then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.x_mult then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.x_mult_mod then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.mult_mod then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.mult then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.h_mult then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.chip_mod then
+--         effect_count = effect_count + 1
+--     end
+--     if effects.chips then
+--         effect_count = effect_count + 1
+--     end
 
-    G.GAME.current_round.meta_scoring_effects = G.GAME.current_round.meta_scoring_effects + effect_count
+--     G.GAME.current_round.meta_scoring_effects = G.GAME.current_round.meta_scoring_effects + effect_count
 
-    if effects.jokers then
-        eman_evaluate_meta(effects.jokers)
-    end
-    if effects.edition then
-        eman_evaluate_meta(effects.edition)
-    end
-end
+--     if effects.jokers then
+--         eman_evaluate_meta(effects.jokers)
+--     end
+--     if effects.edition then
+--         eman_evaluate_meta(effects.edition)
+--     end
+-- end
 
 joker.loc_vars = function (self, info_queue, card)
     return {vars = {

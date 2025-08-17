@@ -34,7 +34,6 @@
         "Blind",
         "eman_draw_phantom_card",
         "poll_edition",
-        "eman_evaluate_meta",
         "create_card",
         "add_tag",
         "Tag",
@@ -42,12 +41,16 @@
         "ease_dollars",
         "copy_card",
         "update_hand_text",
-        "level_up_hand"
+        "level_up_hand",
+        "hand_chips",
+        "mult",
+        "juice_card_until"
     ],
     "cSpell.words": [
         "cardarea",
         "consumeable",
         "consumeables",
-        "mult"
+        "mult",
+        "SMODS"
     ]
 }

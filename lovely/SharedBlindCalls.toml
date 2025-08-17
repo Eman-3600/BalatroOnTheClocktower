@@ -72,30 +72,6 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = '''
-for i=1, hand_space do --draw cards from deckL
-    if G.STATE == G.STATES.TAROT_PACK or G.STATE == G.STATES.SPECTRAL_PACK then 
-        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-    else
-        draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-    end
-end
-'''
-position = "after"
-payload = '''
-
-if G.GAME.blind and hand_space > 0 then
-    G.GAME.blind:eman_after_draw(hand_space)
-end
-'''
-match_indent = true
-times = 1
-
-
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
 pattern = "for i=1, #G.hand.highlighted do"
 position = "before"
 payload = '''
@@ -118,15 +94,18 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = "if scoring_hand[i].ability.name == 'Glass Card' and not scoring_hand[i].debuff and pseudorandom('glass') < G.GAME.probabilities.normal/scoring_hand[i].ability.extra then"
+pattern = "if cards_destroyed[1] then"
 position = "before"
 payload = '''
 
-if G.GAME.blind and G.GAME.blind:eman_should_destroy(scoring_hand[i], hand_chips, mult) then
-    destroyed = true
+for i=1, #scoring_hand do
+
+    if G.GAME.blind and G.GAME.blind:eman_should_destroy(scoring_hand[i], hand_chips, mult) then
+        table.insert(cards_destroyed, scoring_hand[i])
+    end
 end
 '''
-match_indent = true
+match_indent = false
 times = 1
 
 
@@ -160,60 +139,10 @@ times = 1
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = "draw_card(G.deck,G.hand, i*100/hand_space,'up', true)"
-position = "at"
-payload = '''
-if G.GAME.blind and G.GAME.blind:eman_should_draw_phantom() then
-    eman_draw_phantom_card(i*100/hand_space,'up', true)
-else
-    draw_card(G.deck,G.hand, i*100/hand_space,'up', true)
-end
-'''
-match_indent = true
-times = 2
-
-
-
-[[patches]]
-[patches.pattern]
-target = "cardarea.lua"
-pattern = "if area == G.discard then"
-position = "before"
-payload = '''
-if self == G.deck and card.edition and card.edition.baotc_phantom then
-    card:start_dissolve()
-    return false
-end
-'''
-match_indent = true
-times = 1
-
-
-
-[[patches]]
-[patches.pattern]
-target = "common_events.lua"
-pattern = "to:emplace(card, nil, stay_flipped)"
-position = "before"
-payload = '''
-if to == G.deck and card and card.edition and card.edition.baotc_phantom then
-    card:start_dissolve()
-    return true
-end
-'''
-match_indent = true
-times = 1
-
-
-
-[[patches]]
-[patches.pattern]
-target = "functions/state_events.lua"
 pattern = "v.ability.played_this_ante = nil"
 position = "after"
 payload = '''
 v.ability.discarded_this_ante = nil
-v.ability.triggered_this_ante = nil
 '''
 match_indent = true
 times = 1

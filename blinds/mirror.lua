@@ -3,7 +3,7 @@ local blind = {
     key = "mirror",
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 19},
-    boss = {min = 3, max = 10},
+    boss = {min = 4, max = 10},
     boss_colour = HEX('729678'),
     loc_txt = {
         name ="The Mirror",

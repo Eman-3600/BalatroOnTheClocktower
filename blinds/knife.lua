@@ -3,7 +3,7 @@ local blind = {
     key = "knife",
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 12},
-    boss = {min = 1, max = 10},
+    boss = {min = 5, max = 10},
     boss_colour = HEX('e95133'),
     loc_txt = {
         name ="The Knife",
@@ -14,27 +14,26 @@ local blind = {
     },
 }
 
-blind.eman_after_draw = function (self, count)
+blind.calculate = function (self, card, context)
+    if context.hand_drawn then
+        G.E_MANAGER:add_event(Event({
+            trigger = 'after',
+            delay = 0.2,
+            func = function ()
 
-    G.E_MANAGER:add_event(Event({
-        trigger = 'after',
-        delay = 0.2,
-        func = function ()
+                for i = 1, 2 do
 
-            for i = 1, 2 do
+                    if #G.deck.cards == 0 then break end
 
-                if #G.deck.cards == 0 then break end
+                    draw_card(G.deck, G.discard, i*50, 'down', false)
+                end
 
-                draw_card(G.deck, G.discard, i*50, 'down', false)
+                G.GAME.blind:wiggle()
+
+                return true
             end
-
-            G.GAME.blind:wiggle()
-
-            return true
-        end
-    }))
-
-    
+        }))
+    end
 end
 
 blind.stay_flipped = function (self, area, card)

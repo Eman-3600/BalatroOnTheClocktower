@@ -1,0 +1,16 @@
+{
+    "name": "Balatro on the Clocktower",
+    "display_name": "BaOTC",
+    "id": "BaOTC",
+    "prefix": "baotc",
+    "version": "0.2.0",
+    "website_url": "https://github.com/Eman-3600/BalatroOnTheClocktower",
+    "description": "Adds jokers and boss blinds based on the characters from Blood on the Clocktower.",
+    "author": ["Eman3600"],
+    "main_file": "BaOTC.lua",
+    "priority": 0,
+    "badge_colour": "a01116",
+    "dependencies": [
+        "Steamodded (>=1.0.0~BETA-0506a)"
+    ]
+}

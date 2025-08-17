@@ -3,44 +3,42 @@ local blind = {
     key = "word",
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 17},
-    boss = {min = 2, max = 10},
+    boss = {min = 1, max = 10},
     boss_colour = HEX('2750cd'),
     loc_txt = {
         name ="The Word",
         text={
-            "1 card of each suit",
-            "is always face down",
+            "#1# in 2 played",
+            "cards become jinxes",
         },
     },
 }
 
-blind.eman_modify_draw = function (self, hand_count)
+blind.loc_vars = function (self)
 
-    create_all_suit_sets()
-    self.flipped_combos = {}
-
-    for _, card in ipairs(G.hand.cards) do
-        if card.ability.wheel_flipped then
-            self.flipped_combos = create_unique_suit_combo(self.flipped_combos, card.ability.suit_set)
-        end
-    end
-
-    return hand_count
+    return { vars = {""..G.GAME.probabilities.normal}}
 end
 
-blind.stay_flipped = function (self, area, card)
+blind.collection_loc_vars = function (self)
 
-    if area ~= G.hand then return false end
+    return { vars = {""..(G.GAME and G.GAME.probabilities.normal or 1)}}
+end
 
-    local next_suit_combo = create_unique_suit_combo(self.flipped_combos, card.ability.suit_set)
-
-    if next_suit_combo[1] then
-        self.flipped_combos = next_suit_combo
-
-        return true
+blind.calculate = function (self, card, context)
+    if context.before then
+        for k, v in ipairs(context.full_hand) do
+            if (pseudorandom(pseudoseed('word')) < G.GAME.probabilities.normal/2) then
+                G.GAME.eman_jinxes_enabled = true
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        SMODS.change_base(v, 'baotc_jinxes', nil)
+                        v:juice_up()
+                        return true
+                    end
+                }))
+            end
+        end
     end
-
-    return false
 end
 
 

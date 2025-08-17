@@ -1,6 +1,6 @@
 local joker = {
-    name = "Washerwoman",
-    key = "washerwoman",
+    name = "Washer",
+    key = "washer",
     atlas = "atlasclockjokers",
     rarity = 1,
     cost = 5,
@@ -10,7 +10,7 @@ local joker = {
     blueprint_compat = false,
     config = {extra = {has_wash = true}},
     loc_txt = {
-        name ="Washerwoman",
+        name ="Washing Machine",
         text={
             "The first base edition Joker",
             "in each shop gains the",
@@ -26,7 +26,7 @@ joker.calculate = function (self, card, context)
         if not context.eman_store_item.edition and not context.eman_store_item.temp_edition and context.eman_store_item.ability.set == 'Joker' then
             card.ability.extra.has_wash = false
 
-            local edition = poll_edition('washerwoman', nil, true, true)
+            local edition = poll_edition('washer', nil, true, true)
             local store_card = context.eman_store_item
 
             store_card.temp_edition = true

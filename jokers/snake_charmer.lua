@@ -27,6 +27,7 @@ joker.loc_vars = function (self, info_queue, card)
 end
 
 joker.calculate = function (self, card, context)
+
     if context.first_hand_drawn and not context.blueprint_card then
 
         G.E_MANAGER:add_event(Event({
