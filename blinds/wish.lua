@@ -4,7 +4,7 @@ local blind = {
     mult = 1.5,
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 28},
-    boss = {min = 4, max = 10},
+    boss = {min = 3, max = 10},
     config = {},
     boss_colour = HEX('672aa1'),
     loc_txt = {

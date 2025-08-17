@@ -3,7 +3,7 @@ local blind = {
     key = "variable",
     atlas = "atlasclockbosses",
     pos = {x = 0, y = 27},
-    boss = {min = 3, max = 10},
+    boss = {min = 2, max = 10},
     config = {extra = 3},
     boss_colour = HEX('802424'),
     loc_txt = {
