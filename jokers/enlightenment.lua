@@ -14,8 +14,7 @@ local joker = {
         text={
             "Upgrade level of all {C:attention}poker hands",
             "if {C:attention}poker hand{} is a {C:attention}#1#{},",
-            "poker hand changes",
-            "at end of round",
+            "then change poker hand",
         },
     },
 }
@@ -47,15 +46,18 @@ joker.set_ability = function (self, card, initial, delay_sprites)
 end
 
 joker.calculate = function (self, card, context)
-    if context.end_of_round and not context.blueprint and not context.individual and not context.repetition then
-        local poker_hands = {}
-        for k, v in pairs(G.GAME.hands) do
-            if v.visible and k ~= card.ability.to_do_poker_hand then poker_hands[#poker_hands+1] = k end
+    if context.after and not context.blueprint and not context.individual and not context.repetition then
+        if context.scoring_name == card.ability.to_do_poker_hand then
+            local poker_hands = {}
+            local next = 0
+            for k, v in pairs(G.GAME.hands) do
+                if v.visible and k ~= card.ability.to_do_poker_hand then poker_hands[#poker_hands+1] = k end
+            end
+            card.ability.to_do_poker_hand = pseudorandom_element(poker_hands, pseudoseed('enlightenment'))
+            return {
+                message = localize('k_reset')
+            }
         end
-        card.ability.to_do_poker_hand = pseudorandom_element(poker_hands, pseudoseed('enlightenment'))
-        return {
-            message = localize('k_reset')
-        }
     elseif context.before and context.cardarea == G.jokers then
         if context.scoring_name == card.ability.to_do_poker_hand then
             local _card = context.blueprint_card or card

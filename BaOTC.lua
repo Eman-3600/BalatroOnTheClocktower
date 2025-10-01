@@ -67,7 +67,7 @@ local joker_list = {
     "gambler",
     "farmer",
     "orderly",
-    "shield",
+    "knight",
     "ace_of_fours",
     "pacifist",
     "noble",
