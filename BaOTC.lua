@@ -82,6 +82,7 @@ local joker_list = {
     "maintenance",
     "negligence",
     "enlightenment",
+    "charity",
 
     "elvis",
     "danton",
@@ -533,7 +534,7 @@ end
 
 to_big = to_big or function(x) return x end
 
-temp_calc = SMODS.calculate_individual_effect
+local temp_calc = SMODS.calculate_individual_effect
 SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
 
     local effect_count = 0

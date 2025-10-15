@@ -49,7 +49,6 @@ joker.calculate = function (self, card, context)
     if context.after and not context.blueprint and not context.individual and not context.repetition then
         if context.scoring_name == card.ability.to_do_poker_hand then
             local poker_hands = {}
-            local next = 0
             for k, v in pairs(G.GAME.hands) do
                 if v.visible and k ~= card.ability.to_do_poker_hand then poker_hands[#poker_hands+1] = k end
             end

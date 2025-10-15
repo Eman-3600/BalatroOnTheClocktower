@@ -8,7 +8,7 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = false,
-    config = {extra = {savings = 1}},
+    config = {extra = {savings = 2}},
     loc_txt = {
         name ="Noble",
         text={
