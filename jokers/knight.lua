@@ -8,12 +8,12 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {extra = 9},
+    config = {extra = 10},
     loc_txt = {
         name ="Knight",
         text={
-            "Held consumables",
-            "score {C:red}+#1#{} Mult",
+            "{C:red}+#1#{} Mult per",
+            "held consumable",
         },
     },
 }
@@ -44,17 +44,27 @@ joker.calculate = function (self, card, context)
     --         }
     --     end
     -- end
-    if context.other_consumeable then
 
-        G.E_MANAGER:add_event(Event({
-            func = function()
-                context.other_consumeable:juice_up(0.5, 0.5)
-                return true
-            end
-        }))
+    -- if context.other_consumeable then
+
+    --     G.E_MANAGER:add_event(Event({
+    --         func = function()
+    --             context.other_consumeable:juice_up(0.5, 0.5)
+    --             return true
+    --         end
+    --     }))
+    --     return {
+    --         message = localize{type='variable',key='a_mult',vars={card.ability.extra}},
+    --         mult_mod = card.ability.extra
+    --     }
+    -- end
+
+    if context.joker_main then
+
+        local mult_total = #G.consumeables.cards * card.ability.extra
+
         return {
-            message = localize{type='variable',key='a_mult',vars={card.ability.extra}},
-            mult_mod = card.ability.extra
+            mult = mult_total
         }
     end
 end
