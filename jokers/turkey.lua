@@ -26,11 +26,13 @@ joker.loc_vars = function (self, info_queue, card)
 end
 
 joker.add_to_deck = function (self, card, from_debuff)
-    G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.slots
+    -- G.consumeables.config.card_limit = G.consumeables.config.card_limit + card.ability.extra.slots
+    G.consumeables:change_size(card.ability.extra.slots)
 end
 
 joker.remove_from_deck = function (self, card, from_debuff)
-    G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slots
+    -- G.consumeables.config.card_limit = G.consumeables.config.card_limit - card.ability.extra.slots
+    G.consumeables:change_size(-card.ability.extra.slots)
 end
 
 joker.calculate = function (self, card, context)

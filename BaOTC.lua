@@ -38,6 +38,7 @@ local blind_list = {
     "wish",
 
     "scarlet_thorn",
+    "vicious_vortex",
 }
 
 -- list of all jokers
