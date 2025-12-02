@@ -10,14 +10,27 @@ local blind = {
     loc_txt = {
         name ="Vicious Vortex",
         text={
-            "All jokers debuffed if",
-            "money is less than $50",
+            "Base Chips and Mult are zeroed",
+            "if money is less than $#1#",
         },
     },
 }
 
-blind.recalc_debuff = function (self, card, from_blind)
-    return card.area == G.jokers and G.GAME.dollars < 50
+blind.loc_vars = function (self)
+
+    return { vars = {number_format(5 * G.GAME.round_resets.ante + 10)}}
+end
+
+blind.collection_loc_vars = function (self)
+
+    return { vars = {"(10 + 5 * Ante)"}}
+end
+
+blind.modify_hand = function (self, cards, poker_hands, text, mult, hand_chips)
+    if G.GAME.dollars < (5 * G.GAME.round_resets.ante + 10) then
+        return 0, 0, true
+    end
+    return mult, hand_chips, false
 end
 
 return blind
