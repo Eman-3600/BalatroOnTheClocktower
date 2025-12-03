@@ -9,14 +9,6 @@ local joker = {
     perishable_compat = true,
     blueprint_compat = true,
     config = {},
-    loc_txt = {
-        name ="Astrolabe",
-        text={
-            "Sell this card to add",
-            "{C:dark_edition}Negative{} and {C:attention}Eternal{} to",
-            "a random {C:attention}Joker",
-        },
-    },
 }
 
 joker.in_pool = function (self)

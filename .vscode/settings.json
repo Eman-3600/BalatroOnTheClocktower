@@ -44,13 +44,16 @@
         "level_up_hand",
         "hand_chips",
         "mult",
-        "juice_card_until"
+        "juice_card_until",
+        "get_current_pool"
     ],
     "cSpell.words": [
+        "BAOTC",
         "cardarea",
         "consumeable",
         "consumeables",
         "mult",
+        "pseudoseed",
         "SMODS"
     ]
 }

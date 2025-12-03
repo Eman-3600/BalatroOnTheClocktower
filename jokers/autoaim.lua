@@ -9,28 +9,13 @@ local joker = {
     perishable_compat = true,
     blueprint_compat = true,
     config = {extra = {aces = 2}},
-    loc_txt = {
-        name ="Autoaim",
-        text={
-            "On first draw, always draw",
-            "at least {C:attention}#1# Aces{}",
-        },
-    },
 }
 
 joker.loc_vars = function (self, info_queue, card)
+
     return {vars = {
         card.ability.extra.aces,
     }}
-end
-
-joker.in_pool = function (self)
-
-    for _, v in ipairs(G.playing_cards) do
-        if v.config.center == G.P_CENTERS.m_stone then return true end
-    end
-
-    return false
 end
 
 joker.calculate = function (self, card, context)

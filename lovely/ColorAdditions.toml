@@ -8,7 +8,8 @@ target = "functions/misc_functions.lua"
 pattern = "return G.ARGS.LOC_COLOURS[_c] or _default or G.C.UI.TEXT_DARK"
 position = "before"
 payload = '''
-G.ARGS.LOC_COLOURS['baotc_forgotten'] = HEX("630c2b")
+G.ARGS.LOC_COLOURS['baotc_forgotten'] = G.C.RARITY.baotc_forgotten
+G.ARGS.LOC_COLOURS['baotc_jinxes'] = G.C.SUITS.baotc_jinxes
 '''
 match_indent = true
 times = 1

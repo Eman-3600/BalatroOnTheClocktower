@@ -9,13 +9,6 @@ local joker = {
     perishable_compat = true,
     blueprint_compat = false,
     config = {extra = {savings = 2}},
-    loc_txt = {
-        name ="Noble",
-        text={
-            "All card prices are",
-            "reduced by {C:money}$#1#{}",
-        },
-    },
 }
 
 joker.loc_vars = function (self, info_queue, card)

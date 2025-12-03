@@ -9,14 +9,6 @@ local joker = {
     perishable_compat = true,
     blueprint_compat = true,
     config = {extra = {x_mult = 1.25, rank = 11}},
-    loc_txt = {
-        name ="Ace of 4s",
-        text={
-            "Played {C:attention}Aces{} or {C:attention}4s{} give",
-            "{X:mult,C:white} X#1# {} Mult, whichever is",
-            "dominant in played hand",
-        },
-    },
 }
 
 joker.loc_vars = function (self, info_queue, card)

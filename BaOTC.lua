@@ -8,6 +8,13 @@ SMODS.current_mod.optional_features = {
 	}
 }
 
+-- Global table for extra elements
+BAOTC = {
+    Desc = {
+        traveler = {key='o_baotc_traveler', set = 'Other'}
+    }
+}
+
 -- list of all blinds
 local blind_list = {
     "lie",
@@ -84,6 +91,13 @@ local joker_list = {
     "negligence",
     "enlightenment",
     "charity",
+    
+    "deviant",
+    "bureaucrat",
+    "thief",
+    "beggar",
+    "scapegoat",
+    "gunslinger",
 
     "elvis",
     "danton",
@@ -158,12 +172,25 @@ SMODS.Atlas{
     py = 95,
 }
 
+SMODS.Gradient{
+    key = "traveler",
+    colours = {
+        HEX('007bfd'),
+        HEX('8800e3'),
+        HEX('fd0000'),
+        HEX('8800e3'),
+    },
+    cycle = 4,
+}
+
 SMODS.Rarity{
     key = "forgotten",
-    loc_txt = {
-        name ="Forgotten",
-    },
     badge_colour = HEX('630c2b'),
+}
+
+SMODS.Rarity{
+    key = "traveler",
+    badge_colour = SMODS.Gradients.baotc_traveler,
 }
 
 SMODS.Suit {
@@ -181,10 +208,10 @@ SMODS.Suit {
 	pos = { y = 0 },
 	ui_pos = { x = 0, y = 0 },
 
-	loc_txt = {
-        singular = "Jinx",
-        plural = "Jinxes"
-    },
+	-- loc_txt = {
+    --     singular = "Jinx",
+    --     plural = "Jinxes"
+    -- },
 
 	in_pool = function(self, args)
 		return G.GAME and (G.GAME.eman_jinxes_enabled or (G.GAME.selected_back and G.GAME.selected_back.effect.extra and G.GAME.selected_back.effect.extra.eman_jinxes_enabled))
@@ -201,15 +228,6 @@ SMODS.Edition {
     config = {},
     prefix_config = {
         shader = false
-    },
-
-    loc_txt = {
-        name = "Phantom",
-        label = "Phantom",
-        text = {
-            "Vanishes after the",
-            "current blind ends",
-        },
     },
 
     in_shop = false,
@@ -285,14 +303,6 @@ SMODS.Consumable {
     atlas = "atlasclockextras",
     pos = {x = 1, y = 0},
     config = {},
-    loc_txt = {
-        name = "Shadow",
-        text = {
-            "Creates an {C:attention}Eternal",
-            "{C:baotc_forgotten}Forgotten{} {C:attention}Joker{},",
-            "destroys all other Jokers",
-        },
-    },
     can_use = function (self, card)
         for k, v in ipairs(G.jokers.cards) do
             if not v.ability.eternal then
@@ -329,6 +339,34 @@ SMODS.Consumable {
             _card:set_eternal(true)
             _card:add_to_deck()
             G.jokers:emplace(_card)
+            used_tarot:juice_up(0.3, 0.5)
+        return true end }))
+        delay(0.6)
+    end,
+}
+
+SMODS.Consumable {
+    key = "mask",
+    set = 'Spectral',
+    atlas = "atlasclockextras",
+    pos = {x = 3, y = 0},
+    config = {},
+    loc_vars = function (self, info_queue, card)
+
+        info_queue[#info_queue+1] = G.P_CENTERS.j_baotc_deviant
+    end,
+    can_use = function (self, card)
+        return #G.jokers.cards < G.jokers.config.card_limit or card.area == G.jokers
+    end,
+    use = function (self, card, area, copier)
+
+        local used_tarot = copier or card
+
+        G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function()
+            G.GAME.round_resets.hands = G.GAME.round_resets.hands - 1
+            ease_hands_played(-1)
+            play_sound('timpani')
+            SMODS.add_card({area = G.jokers, key = 'j_baotc_deviant'})
             used_tarot:juice_up(0.3, 0.5)
         return true end }))
         delay(0.6)
@@ -564,7 +602,7 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
     return temp_calc(effect, scored_card, key, amount, from_edition)
 end
 
-function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
+function BAOTC.eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
 
     percent = percent or 50
     delay = delay or 0.1 
@@ -612,7 +650,7 @@ function eman_draw_phantom_card(percent, dir, sort, delay, mute, stay_flipped, v
       }))
 end
 
-function eman_draw_phantom_clone(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
+function BAOTC.eman_draw_phantom_clone(percent, dir, sort, delay, mute, stay_flipped, vol, discarded_only)
 
     percent = percent or 50
     delay = delay or 0.1 
@@ -658,7 +696,7 @@ function eman_draw_phantom_clone(percent, dir, sort, delay, mute, stay_flipped, 
       }))
 end
 
-function x_suits_missing(cards, x)
+function BAOTC.x_suits_missing(cards, x)
     local suits = {
         'Hearts',
         'Clubs',
@@ -682,7 +720,7 @@ function x_suits_missing(cards, x)
     return #suits >= x
 end
 
-function x_ranks_missing(cards, x)
+function BAOTC.x_ranks_missing(cards, x)
     local ranks = {
         '2',
         '3',
@@ -716,7 +754,7 @@ function x_ranks_missing(cards, x)
 end
 
 -- Stores within each card all the suits it is considered to be
-function create_all_suit_sets()
+function BAOTC.create_all_suit_sets()
     
     for _, card in ipairs(G.playing_cards) do
         card:create_suit_set()
@@ -739,7 +777,7 @@ end
 -- Creates and returns the different ways in which the given cards can be considered to be different suits
 -- If this is impossible, will return an empty table instead
 -- Used by the Word to flip cards of different suits
-function create_unique_suit_combo(initial, suit_set, keep_old)
+function BAOTC.create_unique_suit_combo(initial, suit_set, keep_old)
     local superpositions = {}
 
     if #initial == 0 then
@@ -794,5 +832,50 @@ function create_unique_suit_combo(initial, suit_set, keep_old)
 
     return superpositions
 end
+
+function BAOTC.calculate_traveler(card, context)
+    if not context.blueprint and context.end_of_round and context.cardarea == G.jokers and context.beat_boss then
+        G.E_MANAGER:add_event(Event({trigger = 'before', delay = 0.4, func = function()
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
+                card:flip()
+                play_sound('card1', 1)
+                card:juice_up(0.3, 0.3)
+                return true end
+            }))
+
+            for i=1, 4 do
+                G.E_MANAGER:add_event(Event({trigger = 'after',delay = 1,func = function()
+                    play_sound('foil2', 0.6 + (.1 * i), 0.7)
+                    card:juice_up()
+                    return true end
+                }))
+            end
+
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.1,func = function()
+                local _pool, _pool_key = get_current_pool('Joker', 'baotc_traveler', nil, 'traveler')
+                local center = pseudorandom_element(_pool, pseudoseed(_pool_key))
+
+                if center == 'UNAVAILABLE' or center == nil then
+                    return false
+                end
+
+                card:remove_from_deck()
+                card:set_ability(center, true)
+                card:add_to_deck()
+                
+                return true end
+            }))
+
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
+                card:flip()
+                play_sound('tarot2', 1, 0.6)
+                card:juice_up(0.3, 0.3)
+                return true end
+            }))
+        return true end }))
+        delay(0.6)
+    end
+end
+
     ----------------------------------------------
     ------------MOD CODE END----------------------

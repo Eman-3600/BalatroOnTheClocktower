@@ -9,14 +9,6 @@ local joker = {
     perishable_compat = true,
     blueprint_compat = false,
     config = {extra = {h_size = 2, active = false}},
-    loc_txt = {
-        name ="Artist",
-        text={
-            "{C:attention}+#1#{} hand size if",
-            "last hand caught fire",
-            "{X:attention,C:white} #2# {}"
-        },
-    },
 }
 
 joker.add_to_deck = function (self, card, from_debuff)

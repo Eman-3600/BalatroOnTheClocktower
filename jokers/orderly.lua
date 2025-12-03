@@ -33,7 +33,7 @@ joker.calculate = function (self, card, context)
         for _, _card in ipairs(G.play.cards) do
             _card:create_suit_set()
 
-            local p = create_unique_suit_combo(superposition, _card.ability.suit_set)
+            local p = BAOTC.create_unique_suit_combo(superposition, _card.ability.suit_set)
 
             if #p > 0 then
                 superposition = p
