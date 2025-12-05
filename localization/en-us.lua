@@ -140,12 +140,37 @@ return {
                 },
             },
 
+            j_baotc_butcher = {
+                name ="Butcher",
+                text={
+                    "First played card of each",
+                    "{C:attention}rank{} gives {X:mult,C:white} X#1# {} Mult when scored",
+                    "Lose {C:money}$#2#{} per discard used",
+                },
+            },
+
+            j_baotc_bone_collector = {
+                name ="Bone Collector",
+                text={
+                    "At start of round, create a",
+                    "{C:baotc_jinxes}#1#{} with a random {C:dark_edition}Edition{}",
+                },
+            },
+
             j_baotc_harlot = {
                 name ="Harlot",
                 text={
                     "Played cards with {C:hearts}#1#{} or {C:diamonds}#2#{}",
                     "suit give {X:mult,C:white} X#3# {} Mult when scored",
                     "Lose {C:money}$#4#{} at end of round",
+                },
+            },
+
+            j_baotc_barista = {
+                name ="Barista",
+                text={
+                    "Retrigger all cards played",
+                    "Lose {C:money}$#1#{} each hand",
                 },
             },
         },

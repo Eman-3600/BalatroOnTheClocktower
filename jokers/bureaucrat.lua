@@ -8,7 +8,7 @@ local joker = {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {extra = {hands = 3, inflation = 2}},
+    config = {extra = {hands = 3, inflation = 1}},
 }
 
 joker.loc_vars = function (self, info_queue, card)

@@ -1,40 +1,30 @@
 local joker = {
-    name = "Scapegoat",
-    key = "scapegoat",
+    name = "Barista",
+    key = "barista",
     atlas = "atlasclockjokers",
     rarity = 'baotc_traveler',
     cost = 15,
-    pos = {x = 7, y = 4},
+    pos = {x = 4, y = 5},
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config = {extra = {repetitions = 1}},
+    config = {extra = {repetitions = 1, fee = 1}},
 }
 
 joker.loc_vars = function (self, info_queue, card)
 
     info_queue[#info_queue+1] = BAOTC.Desc.traveler
 
-    return {}
+    return {vars = {
+        card.ability.extra.fee,
+    }}
 end
 
 joker.calculate = function (self, card, context)
 
     if context.before and not context.blueprint then
-        local targets = {}
-
-        for _, v in ipairs(context.scoring_hand) do
-            if not v.debuff then
-                table.insert(targets, v)
-            end
-        end
-
-        if #targets > 0 then
-            local target = pseudorandom_element(targets, pseudoseed('scapegoat'))
-
-            target:set_debuff(true)
-            target:juice_up()
-        end
+        ease_dollars(-card.ability.extra.fee)
+        card_eval_status_text(card, 'dollars', -card.ability.extra.fee)
     end
 
     if context.repetition and context.cardarea == G.play then

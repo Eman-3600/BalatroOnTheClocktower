@@ -98,6 +98,10 @@ local joker_list = {
     "beggar",
     "scapegoat",
     "gunslinger",
+    "butcher",
+    "bone_collector",
+    "harlot",
+    "barista",
 
     "elvis",
     "danton",
@@ -843,7 +847,7 @@ function BAOTC.calculate_traveler(card, context)
                 return true end
             }))
 
-            for i=1, 4 do
+            for i=1, 3 do
                 G.E_MANAGER:add_event(Event({trigger = 'after',delay = 1,func = function()
                     play_sound('foil2', 0.6 + (.1 * i), 0.7)
                     card:juice_up()
@@ -866,7 +870,7 @@ function BAOTC.calculate_traveler(card, context)
                 return true end
             }))
 
-            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.15,func = function()
+            G.E_MANAGER:add_event(Event({trigger = 'after',delay = 0.95,func = function()
                 card:flip()
                 play_sound('tarot2', 1, 0.6)
                 card:juice_up(0.3, 0.3)
